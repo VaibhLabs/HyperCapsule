@@ -380,7 +380,7 @@ fun StableHeroSection(onNavigateToThemeCreator: () -> Unit) {
                 try {
                     val intent = android.content.Intent(
                         android.content.Intent.ACTION_VIEW,
-                        "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                        "https://github.com/VaibhLabs/HyperCapsule/discussions".toUri()
                     )
                     context.startActivity(intent)
                 } catch (_: Exception) {}

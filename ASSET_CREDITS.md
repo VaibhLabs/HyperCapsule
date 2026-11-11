@@ -14,11 +14,13 @@
   - `app/src/main/res/mipmap-*/ic_launcher_round.png`
   - `app/src/main/res/mipmap-*/ic_launcher_foreground.png`
   - `app/src/main/res/drawable/ic_logo_foreground.png`
+  - `screenshots/logo.png`
+  - `app/src/main/ic_launcher-playstore.png`
   - `app/src/main/res/drawable/ic_launcher_foreground.xml` (Monochrome Vector)
-  - `app/src/main/res/values/colors.xml` (`ic_launcher_background` = `#02050E`)
+  - `app/src/main/res/values/ic_launcher_background.xml` (`ic_launcher_background` = `#000000`)
 - **Source:** Custom original artwork designed for HyperCapsule by VaibhLabs.
 - **License:** Proprietary project asset, copyright © 2026 VaibhLabs. All rights reserved.
-- **Description:** Ambient glowing pill hardware cutout with blue-to-violet cosmic gradient halo, notification bell glyph, and signal indicator.
+- **Description:** 3D illuminated capsule prism with warm orange/gold glowing squircle border, central celestial star, and orbital particle ring on deep AMOLED black.
 
 ---
 

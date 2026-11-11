@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HyperCapsule</string>
+    <string name="back">पीछे</string>
+    <string name="next">आगे</string>
+    <string name="finish">समाप्त</string>
+    <string name="done">हो गया</string>
+    <string name="logo_desc">ऐप लोगो</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="configure">कॉन्फ़िगर करें</string>
+    <string name="clear">साफ़ करें</string>
+    <string name="sort_order">क्रमबद्ध करें</string>
+    <string name="see_all_action">सभी देखें</string>
+    <string name="no_apps_found_desc">कोई ऐप नहीं मिला</string>
+    <string name="actions_empty">कोई क्रिया कॉन्फ़िगर नहीं की गई</string>
+    <string name="search_apps">ऐप खोजें…</string>
+
+    <string name="welcome_title">HyperCapsule में\nआपका स्वागत है</string>
+    <string name="welcome_subtitle">अपने HyperOS अनुभव में आसानी से HyperIslands को जोड़ें।</string>
+    <string name="get_started">शुरू करें</string>
+
+    <string name="how_it_works">यह कैसे काम करता है</string>
+    <string name="how_it_works_desc">अपने पसंदीदा ऐप्स (Spotify, Maps, Timer) चुनें। HyperCapsule उनकी सूचनाओं को एक शानदार HyperIsland में बदल देता है।</string>
+    <string name="beta_warning">नोट: यह ऐप बीटा में है। आपको कुछ बग दिख सकते हैं।</string>
+
+    <string name="device_compatible">डिवाइस संगत है</string>
+    <string name="unsupported_device">असमर्थित डिवाइस</string>
+    <string name="compatible_msg">आपका डिवाइस HyperOS/MIUI चला रहा है। आप तैयार हैं!</string>
+
+    <string name="show_island">आइलैंड दिखाएं</string>
+    <string name="perm_post_desc">स्क्रीन पर आइलैंड नोटिफिकेशन दिखाने के लिए अनुमति चाहिए।</string>
+    <string name="perm_granted">अनुमति मिल गई</string>
+    <string name="allow_notifications">सूचनाएं सक्षम करें</string>
+
+    <string name="read_data">सूचनाएं पढ़ें</string>
+    <string name="perm_listener_desc">ऐप्स को जोड़ने के लिए हमें उनकी सूचनाएं पढ़ने की अनुमति चाहिए।</string>
+    <string name="open_settings">सेटिंग्स खोलें</string>
+
+    <string name="optimization_desc">HyperOS बैकग्राउंड ऐप्स बंद करता है। आइलैंड को सक्रिय रखने के लिए ऑटोस्टार्ट और कोई प्रतिबंध नहीं चालू करें।</string>
+    <string name="enable_autostart">ऑटोस्टार्ट चालू करें</string>
+    <string name="set_battery_no_restrictions">प्रतिबंध हटाएं</string>
+
+    <string name="tab_active">सक्रिय</string>
+    <string name="tab_library">लाइब्रेरी</string>
+    <string name="search_hint">ऐप्स खोजें…</string>
+
+    <string name="no_active_bridges">कोई सक्रिय ब्रिज नहीं</string>
+    <string name="no_active_bridges_desc">ऐप्स चालू करने के लिए लाइब्रेरी में जाएं।</string>
+    <string name="no_apps_found">कोई ऐप नहीं मिला</string>
+
+    <string name="version_template">वर्जन %s</string>
+    <string name="developer_credit">द्वारा VaibhLabs</string>
+    <string name="visit_vaibhlabs">GitHub पर VaibhLabs देखें</string>
+
+    <string name="group_configuration">कॉन्फ़िगरेशन</string>
+    <string name="system_setup">सिस्टम सेटअप</string>
+    <string name="system_setup_subtitle">अनुमतियां और बैटरी ठीक करें</string>
+
+    <string name="permanent_island_title">स्थायी आइलैंड</string>
+    <string name="permanent_island_desc">कोई सूचना न होने पर भी डायनामिक आइलैंड को स्क्रीन पर हमेशा चालू रखें।</string>
+    <string name="permanent_island_width">आइलैंड चौड़ाई</string>
+    <string name="permanent_island_hide_landscape">लैंडस्केप में छुपाएं</string>
+
+    <string name="group_about">के बारे में</string>
+    <string name="developer">VaibhLabs</string>
+    <string name="developer_subtitle">github.com/VaibhLabs/HyperCapsule</string>
+    <string name="source_code">सोर्स कोड</string>
+    <string name="source_code_subtitle">HyperCapsule ओपन सोर्स</string>
+    <string name="licenses">ओपन सोर्स लाइसेंस</string>
+    <string name="licenses_subtitle">थर्ड-पार्टी सॉफ्टवेयर</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="privacy_policy_subtitle">ऑफलाइन और डिवाइस पर डेटा अभ्यास</string>
+    <string name="terms_of_use">उपयोग की शर्तें</string>
+    <string name="terms_of_use_subtitle">एप्लिकेशन शर्तें और सीमाएं</string>
+    <string name="copyright_attributions">कॉपीराइट और आभार</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 और कानूनी नोटिस</string>
+    <string name="contact_support">संपर्क और सहायता</string>
+    <string name="contact_support_subtitle">सहायता, निदान और फीडबैक</string>
+    <string name="footer_made_with_love">Made in India 🇮🇳</string>
+
+    <string name="app_health_desc">सुनिश्चित करें कि बैकग्राउंड में सही काम करने के लिए सभी चेक हरे हों।</string>
+    <string name="req_permissions">आवश्यक अनुमतियां</string>
+    <string name="notif_access">नोटिफिकेशन एक्सेस</string>
+    <string name="notif_access_desc">ऐप इवेंट्स पढ़ने के लिए आवश्यक</string>
+    <string name="device_optimization">डिवाइस अनुकूलन</string>
+    <string name="xiaomi_autostart">Xiaomi ऑटोस्टार्ट</string>
+    <string name="battery_unrestricted">बैटरी अप्रतिबंधित</string>
+    <string name="battery_desc">सिस्टम को ऐप बंद करने से रोकें</string>
+
+    <string name="language">भाषा</string>
+    <string name="language_desc">अपनी पसंदीदा भाषा चुनें</string>
+    <string name="system_default">सिस्टम डिफ़ॉल्ट</string>
+    <string name="save">सहेजें</string>
+    <string name="island_behavior">आइलैंड व्यवहार</string>
+    <string name="limit_strategy">सीमा और प्रदर्शन रणनीतियां</string>
+    <string name="global_settings">ग्लोबल सेटिंग्स</string>
+    <string name="island_appearance">दिखावट और थीमिंग विकल्प</string>
+    <string name="blocked_terms">अवरुद्ध शब्द</string>
+    <string name="spoiler_subtitle">विशिष्ट शब्दों वाली सूचनाएं छुपाएं</string>
+    <string name="backup_restore_title">बैकअप और पुनर्स्थापना</string>
+    <string name="backup_section_title">सेटिंग्स निर्यात या आयात करें</string>
+    <string name="design_hero_customization_title">कस्टमाइज़ेशन हब</string>
+    <string name="design_hero_customization_subtitle">आकार, रंग और एनिमेशन सेट करें</string>
+    <string name="design_hero_community_title">कम्युनिटी डिस्कशंस</string>
+    <string name="design_hero_community_subtitle">GitHub पर समुदाय से जुड़ें</string>
+</resources>

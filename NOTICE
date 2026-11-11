@@ -1,0 +1,72 @@
+HyperCapsule
+Copyright (c) 2026 VaibhLabs. All rights reserved.
+
+This product includes software developed by VaibhLabs.
+
+========================================================================
+Upstream Project Attribution & Modification Notice
+========================================================================
+Portions of this software are derived from:
+HyperBridge
+Copyright (c) 2024-2025 D4vidDf and contributors
+https://github.com/D4vidDf/HyperBridge
+Licensed under the Apache License, Version 2.0.
+
+Modification Notice (Apache License 2.0 Section 4(b)):
+This product is a modified and expanded derivative of HyperBridge.
+Source code files have been refactored, re-architected, and updated to the
+com.hypercapsule.app package namespace, incorporating new features,
+redesigned AMOLED UI, Liquid Glass theme, Jetpack Navigation 3,
+and dedicated settings and legal infrastructure by VaibhLabs.
+
+========================================================================
+Component Attribution: HyperIsland-ToolKit
+========================================================================
+HyperIsland-ToolKit
+Copyright (c) 2024-2025 D4vidDf
+https://github.com/D4vidDf/HyperIsland-ToolKit
+Licensed under the Apache License, Version 2.0.
+
+========================================================================
+Technical Research Attribution
+========================================================================
+Xiaomi HyperOS Focus Notification XMSF Workaround
+Researched by: Stardawn (星间晞)
+Reference: https://www.coolapk1s.com/feed/70418983
+Notice: Research on low-level firewall interaction with the Xiaomi Service
+Framework (com.xiaomi.xmsf) enabling focus notifications on Xiaomi HyperOS.
+
+========================================================================
+Third-Party Software Attribution (Apache License 2.0 Section 4(d))
+========================================================================
+- Haze Glassmorphism Blur Library
+  Copyright (c) 2023-2025 Chris Banes
+  https://github.com/chrisbanes/haze
+  Licensed under the Apache License, Version 2.0
+
+- Shizuku API & Provider
+  Copyright (c) 2017-2025 RikkaApps
+  https://github.com/RikkaApps/Shizuku-API
+  Licensed under the Apache License, Version 2.0
+
+- AndroidX, Jetpack Compose, Material 3, and Palette
+  Copyright (c) The Android Open Source Project / Google LLC
+  https://developer.android.com/jetpack
+  Licensed under the Apache License, Version 2.0
+
+- Kotlin Standard Library, Coroutines, and Serialization
+  Copyright (c) 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors
+  https://github.com/Kotlin
+  Licensed under the Apache License, Version 2.0
+
+- Google Gson
+  Copyright (c) 2008-2025 Google LLC
+  https://github.com/google/gson
+  Licensed under the Apache License, Version 2.0
+
+========================================================================
+Apache License 2.0 Disclaimer
+========================================================================
+This software is provided "AS IS", WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the LICENSE file for specific
+language governing permissions and limitations under the License.

@@ -643,4 +643,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Informativa sulla privacy</string>
+    <string name="privacy_policy_subtitle">Pratiche sui dati offline e sul dispositivo</string>
+    <string name="terms_of_use">Termini di utilizzo</string>
+    <string name="terms_of_use_subtitle">Termini e limitazioni dell\'applicazione</string>
+    <string name="copyright_attributions">Copyright e attribuzioni</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 e note legali</string>
+    <string name="contact_support">Contatto e supporto</string>
+    <string name="contact_support_subtitle">Aiuto, diagnostica e feedback</string>
+    <string name="visit_vaibhlabs">Visita VaibhLabs su GitHub</string>
 </resources>

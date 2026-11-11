@@ -24,7 +24,7 @@ Ensure that your `JAVA_HOME` environment variable points to your JDK 17/21 insta
 
 **PowerShell (Windows):**
 ```powershell
-$env:JAVA_HOME = "C:\Program Files\Java\jdk-21.0.10"
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-21"  # Or your JDK installation directory
 $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 ```
 
@@ -37,7 +37,11 @@ export PATH=$JAVA_HOME/bin:$PATH
 ### 2.2 Configure Android SDK
 Create or update `local.properties` in the root project directory:
 ```properties
+# Windows example:
 sdk.dir=C:\\Users\\<your-username>\\AppData\\Local\\Android\\Sdk
+
+# Linux / macOS example:
+# sdk.dir=/home/<your-username>/Android/Sdk
 ```
 
 ---

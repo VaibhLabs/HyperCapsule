@@ -651,4 +651,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Zásady ochrany osobných údajov</string>
+    <string name="privacy_policy_subtitle">Spracovanie údajov offline a v zariadení</string>
+    <string name="terms_of_use">Podmienky používania</string>
+    <string name="terms_of_use_subtitle">Podmienky a obmedzenia aplikácie</string>
+    <string name="copyright_attributions">Autorské práva a uznania</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 a pôvodné oznámenia</string>
+    <string name="contact_support">Kontakt a podpora</string>
+    <string name="contact_support_subtitle">Pomoc, diagnostika a spätná väzba</string>
+    <string name="visit_vaibhlabs">Navštívte VaibhLabs na GitHube</string>
 </resources>

@@ -659,4 +659,14 @@ Por favor, verifique manualmente para garantir que o serviço funcione corretame
               • <b>Estabilidade:</b> Melhoria na sincronização de notificações e correção de um problema onde as notificações originais às vezes eram descartadas prematuramente.\n
     </string>
     <string name="title_0_5_7">Atualização de Performance e Sincronização</string>
+
+    <string name="privacy_policy">Política de Privacidade</string>
+    <string name="privacy_policy_subtitle">Práticas de dados offline e no dispositivo</string>
+    <string name="terms_of_use">Termos de Uso</string>
+    <string name="terms_of_use_subtitle">Termos e limitações do aplicativo</string>
+    <string name="copyright_attributions">Direitos Autorais e Atribuições</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 e avisos originais</string>
+    <string name="contact_support">Contato e Suporte</string>
+    <string name="contact_support_subtitle">Ajuda, diagnósticos e feedback</string>
+    <string name="visit_vaibhlabs">Visitar VaibhLabs no GitHub</string>
 </resources>

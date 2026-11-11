@@ -25,4 +25,8 @@ sealed interface Screen : NavKey {
     @Serializable data object DndSettings : Screen
     @Serializable data object PermanentIslandConfig : Screen
     @Serializable data object ReplyCustomization : Screen
+    @Serializable data object PrivacyPolicy : Screen
+    @Serializable data object TermsOfUse : Screen
+    @Serializable data object CopyrightAttribution : Screen
+    @Serializable data object ContactSupport : Screen
 }

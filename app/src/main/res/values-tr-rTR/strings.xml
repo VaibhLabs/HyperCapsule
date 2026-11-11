@@ -643,4 +643,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="privacy_policy_subtitle">Çevrimdışı ve cihaz içi veri uygulamaları</string>
+    <string name="terms_of_use">Kullanım Koşulları</string>
+    <string name="terms_of_use_subtitle">Uygulama koşulları ve sınırlamaları</string>
+    <string name="copyright_attributions">Telif Hakkı ve Atıflar</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 ve kaynak bildirimleri</string>
+    <string name="contact_support">İletişim ve Destek</string>
+    <string name="contact_support_subtitle">Yardım, tanılama ve geri bildirim</string>
+    <string name="visit_vaibhlabs">GitHub\'da VaibhLabs\'i Ziyaret Edin</string>
 </resources>

@@ -630,6 +630,16 @@
     <string name="onboarding_widget_desc">Add standard Android widgets to your island for quick access.</string>
     <string name="onboard_theme_desc">Fully customize colors, shapes and icons of your island.</string>
     <string name="onboard_design_desc">Expand the possibilities with different customization options</string>
+
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_subtitle">Offline &amp; on-device data practices</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="terms_of_use_subtitle">Application terms &amp; limitations</string>
+    <string name="copyright_attributions">Copyright &amp; Attributions</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 &amp; upstream notices</string>
+    <string name="contact_support">Contact &amp; Support</string>
+    <string name="contact_support_subtitle">Help, diagnostics &amp; feedback</string>
+    <string name="visit_vaibhlabs">Visit VaibhLabs on GitHub</string>
 </resources>
 
 

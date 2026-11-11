@@ -478,6 +478,16 @@
 
     <string name="perm_display_title">Mostrar sobre otras aplicaciones</string>
     <string name="perm_display_onboard_desc">Requerido para mostrar la ventana de respuesta rápida.</string>
+
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="privacy_policy_subtitle">Prácticas de datos sin conexión en el dispositivo</string>
+    <string name="terms_of_use">Términos de uso</string>
+    <string name="terms_of_use_subtitle">Términos y limitaciones de la aplicación</string>
+    <string name="copyright_attributions">Derechos de autor y atribuciones</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 y avisos originales</string>
+    <string name="contact_support">Contacto y soporte</string>
+    <string name="contact_support_subtitle">Ayuda, diagnósticos y sugerencias</string>
+    <string name="visit_vaibhlabs">Visitar VaibhLabs en GitHub</string>
 </resources>
 
 

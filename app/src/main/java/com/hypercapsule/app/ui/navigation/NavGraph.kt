@@ -9,6 +9,10 @@ import com.hypercapsule.app.R
 import com.hypercapsule.app.data.AppPreferences
 import com.hypercapsule.app.ui.screens.home.HomeScreen
 import com.hypercapsule.app.ui.screens.onboarding.OnboardingScreen
+import com.hypercapsule.app.ui.screens.legal.ContactSupportScreen
+import com.hypercapsule.app.ui.screens.legal.CopyrightAttributionScreen
+import com.hypercapsule.app.ui.screens.legal.PrivacyPolicyScreen
+import com.hypercapsule.app.ui.screens.legal.TermsOfUseScreen
 import com.hypercapsule.app.ui.screens.settings.AppPriorityScreen
 import com.hypercapsule.app.ui.screens.settings.BackupSettingsScreen
 import com.hypercapsule.app.ui.screens.settings.BlocklistAppListScreen
@@ -60,7 +64,11 @@ fun mainNavGraph(
             onGlobalSettingsClick = { navigator.navigate(Screen.GlobalSettings) },
             onHistoryClick = { navigator.navigate(Screen.History) },
             onBlocklistClick = { navigator.navigate(Screen.GlobalBlocklist) },
-            onBackupClick = { navigator.navigate(Screen.Backup) }
+            onBackupClick = { navigator.navigate(Screen.Backup) },
+            onPrivacyPolicyClick = { navigator.navigate(Screen.PrivacyPolicy) },
+            onTermsOfUseClick = { navigator.navigate(Screen.TermsOfUse) },
+            onCopyrightClick = { navigator.navigate(Screen.CopyrightAttribution) },
+            onContactSupportClick = { navigator.navigate(Screen.ContactSupport) }
         )
     }
     entry<Screen.GlobalSettings> {
@@ -150,5 +158,22 @@ fun mainNavGraph(
     }
     entry<Screen.IslandSettings> {
         IslandSettingsScreen(onBack = { navigator.goBack() })
+    }
+    entry<Screen.PrivacyPolicy> {
+        PrivacyPolicyScreen(onBack = { navigator.goBack() })
+    }
+    entry<Screen.TermsOfUse> {
+        TermsOfUseScreen(onBack = { navigator.goBack() })
+    }
+    entry<Screen.CopyrightAttribution> {
+        CopyrightAttributionScreen(onBack = { navigator.goBack() })
+    }
+    entry<Screen.ContactSupport> {
+        ContactSupportScreen(
+            onBack = { navigator.goBack() },
+            onPrivacyClick = { navigator.navigate(Screen.PrivacyPolicy) },
+            onTermsClick = { navigator.navigate(Screen.TermsOfUse) },
+            onLicensesClick = { navigator.navigate(Screen.Licenses) }
+        )
     }
 }

@@ -1298,7 +1298,7 @@ class NotificationReaderService : NotificationListenerService() {
     private var syncJob: Job? = null
 
     override fun onListenerConnected() { 
-        Log.i(TAG, "HyperBridge Service Connected")
+        Log.i(TAG, "HyperCapsule Service Connected")
         syncNotifications(refresh = true)
         syncJob?.cancel()
         syncJob = serviceScope.launch {

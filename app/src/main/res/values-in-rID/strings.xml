@@ -634,4 +634,14 @@ Penulisan ulang total logika inti untuk stabilitas yang lebih baik.\n
     <string name="reply_hint">Balas...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="privacy_policy_subtitle">Praktik data offline dan di perangkat</string>
+    <string name="terms_of_use">Ketentuan Penggunaan</string>
+    <string name="terms_of_use_subtitle">Ketentuan dan batasan aplikasi</string>
+    <string name="copyright_attributions">Hak Cipta &amp; Atribusi</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 &amp; pemberitahuan hulu</string>
+    <string name="contact_support">Kontak &amp; Dukungan</string>
+    <string name="contact_support_subtitle">Bantuan, diagnostik &amp; umpan balik</string>
+    <string name="visit_vaibhlabs">Kunjungi VaibhLabs di GitHub</string>
 </resources>

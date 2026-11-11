@@ -1,5 +1,6 @@
 ﻿package com.hypercapsule.app.ui.screens.settings
 
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,14 +28,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Copyright
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.SettingsSuggest
+import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -86,7 +91,11 @@ fun InfoScreen(
     onGlobalSettingsClick: () -> Unit,
     onHistoryClick: () -> Unit,
     onBlocklistClick: () -> Unit,
-    onBackupClick: () -> Unit
+    onBackupClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit,
+    onTermsOfUseClick: () -> Unit,
+    onCopyrightClick: () -> Unit,
+    onContactSupportClick: () -> Unit
 ) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
@@ -252,16 +261,30 @@ fun InfoScreen(
                                 title = stringResource(R.string.developer),
                                 subtitle = stringResource(R.string.developer_subtitle),
                                 icon = Icons.Default.Person,
-                                showChevron = false,
+                                showChevron = true,
                                 onClick = {
                                     try {
-                                        val intent = android.content.Intent(
-                                            android.content.Intent.ACTION_VIEW,
-                                            "https://vaibhlabs.com".toUri()
-                                        )
-                                        context.startActivity(intent)
-                                    } catch (_: Exception) {}
+                                        uriHandler.openUri("https://github.com/VaibhLabs/HyperCapsule")
+                                    } catch (_: Exception) {
+                                        Toast.makeText(context, "Could not open browser", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
+                            )
+                            HorizontalDivider(color = colors.borderSubtle)
+                            HyperCapsuleSettingsRow(
+                                title = stringResource(R.string.privacy_policy),
+                                subtitle = stringResource(R.string.privacy_policy_subtitle),
+                                icon = Icons.Default.Security,
+                                showChevron = true,
+                                onClick = onPrivacyPolicyClick
+                            )
+                            HorizontalDivider(color = colors.borderSubtle)
+                            HyperCapsuleSettingsRow(
+                                title = stringResource(R.string.terms_of_use),
+                                subtitle = stringResource(R.string.terms_of_use_subtitle),
+                                icon = Icons.Default.Gavel,
+                                showChevron = true,
+                                onClick = onTermsOfUseClick
                             )
                             HorizontalDivider(color = colors.borderSubtle)
                             HyperCapsuleSettingsRow(
@@ -271,23 +294,37 @@ fun InfoScreen(
                                 showChevron = true,
                                 onClick = onLicensesClick
                             )
+                            HorizontalDivider(color = colors.borderSubtle)
+                            HyperCapsuleSettingsRow(
+                                title = stringResource(R.string.copyright_attributions),
+                                subtitle = stringResource(R.string.copyright_attributions_subtitle),
+                                icon = Icons.Default.Copyright,
+                                showChevron = true,
+                                onClick = onCopyrightClick
+                            )
+                            HorizontalDivider(color = colors.borderSubtle)
+                            HyperCapsuleSettingsRow(
+                                title = stringResource(R.string.contact_support),
+                                subtitle = stringResource(R.string.contact_support_subtitle),
+                                icon = Icons.Default.SupportAgent,
+                                showChevron = true,
+                                onClick = onContactSupportClick
+                            )
                         }
                     }
 
                     Spacer(modifier = Modifier.height(spacing.medium))
 
-                    // Website-Style Button: Visit VaibhLabs.com
+                    // GitHub / Website Action Button
                     HyperCapsuleActionButton(
                         text = stringResource(R.string.visit_vaibhlabs),
                         icon = Icons.Default.Language,
                         onClick = {
                             try {
-                                val intent = android.content.Intent(
-                                    android.content.Intent.ACTION_VIEW,
-                                    "https://vaibhlabs.com".toUri()
-                                )
-                                context.startActivity(intent)
-                            } catch (_: Exception) {}
+                                uriHandler.openUri("https://github.com/VaibhLabs/HyperCapsule")
+                            } catch (_: Exception) {
+                                Toast.makeText(context, "Could not open browser", Toast.LENGTH_SHORT).show()
+                            }
                         },
                         isPrimary = false,
                         modifier = Modifier.fillMaxWidth()
@@ -334,6 +371,7 @@ fun LanguageSelectorDialog(onDismiss: () -> Unit) {
         "Čeština" to "cs",
         "Deutsch" to "de",
         "English" to "en",
+        "हिन्दी" to "hi",
         "Español" to "es",
         "Français" to "fr",
         "Italiano" to "it",

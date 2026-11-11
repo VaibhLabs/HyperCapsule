@@ -636,4 +636,14 @@
     <string name="onboarding_widget_desc">標準的なAndroidウィジェットをアイランドに追加し、すぐにアクセスできるようにします。</string>
     <string name="onboard_theme_desc">アイランドの色、形、アイコンを自由にカスタマイズできます。</string>
     <string name="onboard_design_desc">さまざまなカスタマイズオプションで可能性を広げましょう</string>
+
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="privacy_policy_subtitle">完全オフライン・端末内データ処理</string>
+    <string name="terms_of_use">利用規約</string>
+    <string name="terms_of_use_subtitle">アプリの利用規約と制限事項</string>
+    <string name="copyright_attributions">著作権と帰属表記</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 および上流通知</string>
+    <string name="contact_support">お問い合わせ・サポート</string>
+    <string name="contact_support_subtitle">ヘルプ、診断情報、フィードバック</string>
+    <string name="visit_vaibhlabs">GitHubでVaibhLabsを見る</string>
 </resources>

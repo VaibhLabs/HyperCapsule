@@ -651,4 +651,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Політика конфіденційності</string>
+    <string name="privacy_policy_subtitle">Автономна обробка даних на пристрої</string>
+    <string name="terms_of_use">Умови використання</string>
+    <string name="terms_of_use_subtitle">Умови та обмеження програми</string>
+    <string name="copyright_attributions">Авторські права та подяки</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 та сповіщення</string>
+    <string name="contact_support">Контакти та підтримка</string>
+    <string name="contact_support_subtitle">Допомога, діагностика та відгуки</string>
+    <string name="visit_vaibhlabs">Відкрити VaibhLabs на GitHub</string>
 </resources>

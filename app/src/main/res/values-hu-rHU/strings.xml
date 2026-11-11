@@ -642,4 +642,14 @@ Továbbfejlesztett felismerési logika a VoIP- és tárcsázóalkalmazások szé
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Adatvédelmi irányelvek</string>
+    <string name="privacy_policy_subtitle">Offline és eszközön belüli adatkezelés</string>
+    <string name="terms_of_use">Felhasználási feltételek</string>
+    <string name="terms_of_use_subtitle">Alkalmazási feltételek és korlátozások</string>
+    <string name="copyright_attributions">Szerzői jogok és elismerések</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 és eredeti közlemények</string>
+    <string name="contact_support">Kapcsolat és támogatás</string>
+    <string name="contact_support_subtitle">Súgó, diagnosztika és visszajelzés</string>
+    <string name="visit_vaibhlabs">VaibhLabs megnyitása a GitHubon</string>
 </resources>

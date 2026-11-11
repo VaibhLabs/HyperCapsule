@@ -438,6 +438,16 @@
         <item quantity="one">%1$d custom action</item>
         <item quantity="other">%1$d custom actions</item>
     </plurals>
+
+    <string name="privacy_policy">Política de privadesa</string>
+    <string name="privacy_policy_subtitle">Pràctiques de dades fora de línia al dispositiu</string>
+    <string name="terms_of_use">Condicions d\'ús</string>
+    <string name="terms_of_use_subtitle">Condicions i limitacions de l\'aplicació</string>
+    <string name="copyright_attributions">Drets d\'autor i atribucions</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 i avisos originals</string>
+    <string name="contact_support">Contacte i suport</string>
+    <string name="contact_support_subtitle">Ajuda, diagnòstics i suggeriments</string>
+    <string name="visit_vaibhlabs">Visita VaibhLabs a GitHub</string>
 </resources>
 
 

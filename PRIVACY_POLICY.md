@@ -1,9 +1,9 @@
 # Privacy Policy for HyperCapsule
 
-**Effective Date:** [EFFECTIVE_DATE: e.g., November 11, 2026]  
-**Last Updated:** [EFFECTIVE_DATE: e.g., November 11, 2026]  
-**Application Operator / Data Controller:** [LEGAL_OPERATOR_NAME / PROJECT MAINTAINERS]  
-**Contact Email:** [CONTACT_EMAIL: e.g., support@hypercapsule.org]  
+**Effective Date:** November 11, 2026  
+**Last Updated:** November 11, 2026  
+**Application Operator / Data Controller:** VaibhLabs  
+**Contact Email:** riftarc.official@gmail.com  
 
 ---
 
@@ -82,6 +82,6 @@ If this Privacy Policy is updated, the revised policy will be included in subseq
 
 For inquiries regarding this Privacy Policy, source code audit, or software licensing:
 
-* **Operator / Project Maintainer:** [LEGAL_OPERATOR_NAME]
-* **Contact Email:** [CONTACT_EMAIL]
-* **Project Repository:** [PROJECT_REPOSITORY_URL]
+* **Operator / Project Maintainer:** VaibhLabs
+* **Contact Email:** riftarc.official@gmail.com
+* **Project Repository:** https://github.com/VaibhLabs/HyperCapsule

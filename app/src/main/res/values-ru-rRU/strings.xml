@@ -652,4 +652,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="privacy_policy_subtitle">Автономная обработка данных на устройстве</string>
+    <string name="terms_of_use">Условия использования</string>
+    <string name="terms_of_use_subtitle">Условия и ограничения приложения</string>
+    <string name="copyright_attributions">Авторские права и благодарности</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 и уведомления</string>
+    <string name="contact_support">Контакты и поддержка</string>
+    <string name="contact_support_subtitle">Помощь, диагностика и отзывы</string>
+    <string name="visit_vaibhlabs">Открыть VaibhLabs на GitHub</string>
 </resources>

@@ -49,7 +49,9 @@ fun LicensesScreen(onBack: () -> Unit) {
     val typography = LocalHyperCapsuleTypography.current
 
     val libs = listOf(
+        Library("HyperBridge (Upstream Base)", "D4vidDf & contributors", "Apache 2.0", "https://github.com/D4vidDf/HyperBridge"),
         Library("HyperIsland-ToolKit", "D4vidDf", "Apache 2.0", "https://github.com/D4vidDf/HyperIsland-ToolKit"),
+        Library("Haze", "Chris Banes", "Apache 2.0", "https://github.com/chrisbanes/haze"),
         Library("Jetpack Compose", "Google", "Apache 2.0", "https://developer.android.com/jetpack/compose"),
         Library("Material 3", "Google", "Apache 2.0", "https://m3.material.io/"),
         Library("AndroidX Core", "Google", "Apache 2.0", "https://developer.android.com/jetpack/androidx"),

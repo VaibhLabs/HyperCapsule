@@ -637,4 +637,14 @@
     <string name="reply_hint">回覆……</string>
     <string name="perm_display_title">顯示在其他應用程式上</string>
     <string name="perm_display_onboard_desc">需要顯示自訂島內回覆覆蓋。</string>
+
+    <string name="privacy_policy">隱私權政策</string>
+    <string name="privacy_policy_subtitle">離線與本機裝置資料處理實踐</string>
+    <string name="terms_of_use">使用條款</string>
+    <string name="terms_of_use_subtitle">應用程式使用條款與限制</string>
+    <string name="copyright_attributions">版權與來源聲明</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 及上游聲明</string>
+    <string name="contact_support">聯絡與技術支援</string>
+    <string name="contact_support_subtitle">說明、診斷報告與意見回饋</string>
+    <string name="visit_vaibhlabs">在 GitHub 上造訪 VaibhLabs</string>
 </resources>

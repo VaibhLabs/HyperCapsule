@@ -1,43 +1,55 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="960"
-    android:viewportHeight="960">
-  <group>
-    <!-- Outer Pill Border -->
-    <path
-        android:fillColor="@android:color/transparent"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="40"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M340,360 L620,360 A120,120 0 0,1 740,480 A120,120 0 0,1 620,600 L340,600 A120,120 0 0,1 220,480 A120,120 0 0,1 340,360 Z"/>
-    <!-- Center Bridge Line -->
-    <path
-        android:fillColor="@android:color/transparent"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="32"
-        android:pathData="M430,480 L530,480"/>
-    <!-- Notification Bell (Left) -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M340,410 C322,410 308,424 308,442 L308,485 L290,505 L290,515 L390,515 L390,505 L372,485 L372,442 C372,424 358,410 340,410 Z M330,522 C330,528 334,532 340,532 C346,532 350,528 350,522 Z"/>
-    <!-- Equalizer Bars (Right) -->
-    <!-- Bar 1 -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M575,475 L590,475 A5,5 0 0,1 595,480 L595,505 A5,5 0 0,1 590,510 L575,510 A5,5 0 0,1 570,505 L570,480 A5,5 0 0,1 575,475 Z"/>
-    <!-- Bar 2 -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M605,455 L620,455 A5,5 0 0,1 625,460 L625,505 A5,5 0 0,1 620,510 L605,510 A5,5 0 0,1 600,505 L600,460 A5,5 0 0,1 605,455 Z"/>
-    <!-- Bar 3 -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M635,440 L650,440 A5,5 0 0,1 655,445 L655,505 A5,5 0 0,1 650,510 L635,510 A5,5 0 0,1 630,505 L630,445 A5,5 0 0,1 635,440 Z"/>
-    <!-- Bar 4 -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M665,425 L680,425 A5,5 0 0,1 685,430 L685,505 A5,5 0 0,1 680,510 L665,510 A5,5 0 0,1 660,505 L660,430 A5,5 0 0,1 665,425 Z"/>
-  </group>
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.85"
+        android:scaleY="0.85">
+
+        <!-- Outer Squircle Glow -->
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#FFFF8800"
+            android:strokeWidth="1.8"
+            android:pathData="M24,14 C36,12 72,12 84,14 C94,16 96,24 96,36 C96,72 94,80 84,94 C72,96 36,96 24,94 C14,80 12,72 12,36 C12,24 14,16 24,14 Z" />
+
+        <!-- Orbital Ring -->
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#FFFF9900"
+            android:strokeWidth="2.2"
+            android:pathData="M18,66 C16,63 18,58 24,53 C34,44 74,44 84,53 C90,58 92,63 90,66 C88,69 82,72 74,74 C62,77 46,77 34,74 C26,72 20,69 18,66 Z" />
+
+        <!-- Hexagonal Capsule Prism - Top Facet (White/Silver) -->
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M54,24 L78,38 L78,54 L54,42 Z" />
+
+        <path
+            android:fillColor="#FFE0E0E0"
+            android:pathData="M54,24 L30,38 L30,54 L54,42 Z" />
+
+        <!-- Hexagonal Capsule Prism - Bottom Facet (Warm Orange/Amber) -->
+        <path
+            android:fillColor="#FFFF6D00"
+            android:pathData="M54,84 L30,70 L30,54 L54,66 Z" />
+
+        <path
+            android:fillColor="#FFFF9100"
+            android:pathData="M54,84 L78,70 L78,54 L54,66 Z" />
+
+        <!-- Inner Dark Diamond Void -->
+        <path
+            android:fillColor="#FF101014"
+            android:pathData="M54,42 L78,54 L54,66 L30,54 Z" />
+
+        <!-- Central Celestial 4-Point Star (Gold) -->
+        <path
+            android:fillColor="#FFFFD54F"
+            android:pathData="M54,46 C54,51 57,54 62,54 C57,54 54,57 54,62 C54,57 51,54 46,54 C51,54 54,51 54,46 Z" />
+
+    </group>
 </vector>

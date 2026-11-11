@@ -634,4 +634,14 @@
     <string name="reply_hint">Reply...</string>
     <string name="perm_display_title">Display over other apps</string>
     <string name="perm_display_onboard_desc">Required to show the custom inline reply overlay.</string>
+
+    <string name="privacy_policy">개인정보 처리방침</string>
+    <string name="privacy_policy_subtitle">오프라인 및 기기 내 데이터 처리 방식</string>
+    <string name="terms_of_use">이용약관</string>
+    <string name="terms_of_use_subtitle">애플리케이션 이용약관 및 제한 사항</string>
+    <string name="copyright_attributions">저작권 및 오픈소스 출처</string>
+    <string name="copyright_attributions_subtitle">VaibhLabs © 2026 및 라이선스 고지</string>
+    <string name="contact_support">문의 및 지원</string>
+    <string name="contact_support_subtitle">도움말, 진단 정보 및 피드백</string>
+    <string name="visit_vaibhlabs">GitHub에서 VaibhLabs 방문하기</string>
 </resources>
