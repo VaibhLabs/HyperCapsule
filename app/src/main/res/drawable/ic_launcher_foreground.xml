@@ -1,0 +1,43 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <group>
+    <!-- Outer Pill Border -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="40"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M340,360 L620,360 A120,120 0 0,1 740,480 A120,120 0 0,1 620,600 L340,600 A120,120 0 0,1 220,480 A120,120 0 0,1 340,360 Z"/>
+    <!-- Center Bridge Line -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="32"
+        android:pathData="M430,480 L530,480"/>
+    <!-- Notification Bell (Left) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M340,410 C322,410 308,424 308,442 L308,485 L290,505 L290,515 L390,515 L390,505 L372,485 L372,442 C372,424 358,410 340,410 Z M330,522 C330,528 334,532 340,532 C346,532 350,528 350,522 Z"/>
+    <!-- Equalizer Bars (Right) -->
+    <!-- Bar 1 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M575,475 L590,475 A5,5 0 0,1 595,480 L595,505 A5,5 0 0,1 590,510 L575,510 A5,5 0 0,1 570,505 L570,480 A5,5 0 0,1 575,475 Z"/>
+    <!-- Bar 2 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M605,455 L620,455 A5,5 0 0,1 625,460 L625,505 A5,5 0 0,1 620,510 L605,510 A5,5 0 0,1 600,505 L600,460 A5,5 0 0,1 605,455 Z"/>
+    <!-- Bar 3 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M635,440 L650,440 A5,5 0 0,1 655,445 L655,505 A5,5 0 0,1 650,510 L635,510 A5,5 0 0,1 630,505 L630,445 A5,5 0 0,1 635,440 Z"/>
+    <!-- Bar 4 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M665,425 L680,425 A5,5 0 0,1 685,430 L685,505 A5,5 0 0,1 680,510 L665,510 A5,5 0 0,1 660,505 L660,430 A5,5 0 0,1 665,425 Z"/>
+  </group>
+</vector>

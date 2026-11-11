@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - HyperCapsule</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fbfbfb;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #e0e0e0;
+            }
+            a { color: #8ab4f8; }
+            .card { background-color: #1e1e1e; border-color: #333; }
+        }
+        h1, h2, h3 {
+            color: inherit;
+        }
+        h1 { border-bottom: 2px solid #007AFF; padding-bottom: 8px; }
+        h2 { margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+        .badge {
+            display: inline-block;
+            background-color: #34C759;
+            color: white;
+            font-size: 0.85em;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            background: #ffffff;
+        }
+        ul { padding-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>HyperCapsule Privacy Policy</h1>
+    <p><strong>Effective Date:</strong> [EFFECTIVE_DATE: November 11, 2026]</p>
+    <p><span class="badge">100% Offline &amp; Private</span></p>
+
+    <div class="card">
+        <h3>Summary</h3>
+        <p><strong>HyperCapsule does NOT collect, store, or transmit your personal data.</strong> The app does not request Internet access permissions (<code>android.permission.INTERNET</code>). All notifications, alerts, and settings remain completely on your local device.</p>
+    </div>
+
+    <h2>1. Data Handling &amp; Permissions</h2>
+    <ul>
+        <li><strong>Notification Access (NotificationListenerService):</strong> Used exclusively to convert incoming notifications (chats, calls, navigation, media, and downloads) into the pill-shaped HyperIsland interface. Notification contents are processed in memory and are discarded when dismissed.</li>
+        <li><strong>Query All Packages (QUERY_ALL_PACKAGES):</strong> Required so you can select which apps to bridge to the island and manage custom per-app rules. App lists and icons are cached locally only.</li>
+        <li><strong>Display Over Other Apps (SYSTEM_ALERT_WINDOW):</strong> Used solely to show the floating inline reply overlay window. Text entered is routed directly to the target app's remote input intent.</li>
+        <li><strong>Shizuku Privileged Access:</strong> An optional feature for Xiaomi Chinese ROMs to toggle system focus notification parameters locally without external communication.</li>
+    </ul>
+
+    <h2>2. Storage &amp; Security</h2>
+    <p>All application preferences, keyword filters, and widget setups are stored inside your device's private sandbox storage using Android's Room SQLite database. No external databases, telemetry, crash reporters, or advertising networks are integrated into HyperCapsule.</p>
+
+    <h2>3. Operator Information</h2>
+    <p><strong>Project Operator / Maintainer:</strong> [LEGAL_OPERATOR_NAME]<br>
+    <strong>Contact Email:</strong> [CONTACT_EMAIL]</p>
+</body>
+</html>

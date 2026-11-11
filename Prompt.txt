@@ -1,0 +1,517 @@
+# HYPERCAPSULE — PHASE 2.5
+# HUMAN-CRAFTED UI REFINEMENT, REAL GRAPHICS & VERSION 1.0 STABLE
+
+**Project Root:** `D:\HyperCapsule`
+
+You are now working as a senior Android product designer, professional visual designer, Jetpack Compose architect, motion designer, and Android release engineer.
+
+The previous UI redesign is functional, but its visual quality still feels AI-generated, generic, repetitive, and insufficiently polished.
+
+Your task is to perform a comprehensive visual redesign and refinement of the entire HyperCapsule application.
+
+This is NOT a minor cosmetic update.
+
+The result must feel like a professionally art-directed, human-designed commercial Android application.
+
+---
+
+# 1. DESIGN DIRECTION — HUMAN-DESIGNED, NOT AI-GENERATED
+
+The current design overuses:
+- Generic neon gradients.
+- Repetitive glowing cards.
+- Artificial-looking decorative shapes.
+- Generic icon-only visual sections.
+- Excessive glassmorphism.
+- Repetitive AI-generated layouts.
+- Unnecessary visual effects.
+
+Reduce these significantly.
+
+Create a distinctive design identity for HyperCapsule.
+
+Design principles:
+
+- Strong visual hierarchy.
+- Intentional whitespace.
+- Carefully balanced composition.
+- Realistic product imagery.
+- Natural-looking visual details.
+- Consistent alignment and typography.
+- Subtle depth instead of excessive glow.
+- Purposeful animations.
+- Proper visual consistency across screens.
+
+Use premium Android apps and professionally designed mobile interfaces as references.
+
+Do not copy another application.
+
+# 2. RESEARCH PROFESSIONAL UI DESIGN SKILLS
+
+Before implementation, discover available design-related skills in the Antigravity environment.
+
+Search for an appropriate professional mobile UI/UX design skill or install a suitable UI design skill if the environment supports it.
+
+Study its guidelines and apply relevant principles to:
+
+- Mobile information architecture.
+- Visual hierarchy.
+- Typography.
+- Color systems.
+- Component design.
+- Interaction patterns.
+- Motion design.
+- Accessibility.
+- Design consistency.
+
+Also research reputable design references and real mobile UI examples.
+
+Do not pretend that a skill was installed if installation was unavailable.
+
+Document the selected design methodology in:
+
+`DESIGN_RESEARCH.md`
+
+# 3. REAL IMAGE ASSETS — NO GENERIC AI-LIKE GRAPHICS
+
+Where imagery genuinely improves the design, use real, professionally sourced, copyright-compatible visual assets.
+
+Use:
+- Properly licensed images.
+- CC0 assets.
+- Unsplash images where their applicable license permits the intended use.
+- Pixabay assets where their applicable license permits the intended use.
+- Original custom vector illustrations created specifically for HyperCapsule.
+
+IMPORTANT:
+
+- Verify the license and usage restrictions of every external asset.
+- Save image files locally inside the project.
+- Do not hotlink external image URLs at runtime.
+- Do not use copyrighted images without permission.
+- Do not download random images from Google Images.
+- Record asset source, author, license and attribution requirements in `ASSET_CREDITS.md`.
+- Prefer optimized WebP or AVIF assets.
+- Provide appropriate fallback visuals.
+
+Do not put meaningless stock photography everywhere.
+
+Use imagery selectively for:
+- Home dashboard hero sections.
+- Onboarding illustrations.
+- Empty states.
+- Feature introduction cards.
+- Theme discovery.
+- Design Hub promotional sections.
+
+For actual functionality, use clear vector icons and real UI previews rather than decorative photos.
+
+# 4. REBUILD THE ICONOGRAPHY SYSTEM
+
+The app currently relies too heavily on generic symbols.
+
+Replace inconsistent decorative icons with a cohesive professionally designed icon system.
+
+Use:
+- Material Symbols where appropriate.
+- Android-compatible vector assets.
+- Custom original SVG/vector illustrations.
+- Consistent stroke widths.
+- Consistent icon sizing.
+- Proper filled and outlined variants.
+
+Create a central icon mapping and eliminate random emoji or decorative symbols from production UI.
+
+Never replace functional icons with photographs.
+
+# 5. REDESIGN SETTINGS — ESPECIALLY ISLAND BEHAVIOUR
+
+This is a major priority.
+
+The current Island Behaviour section looks poor and needs a complete layout redesign.
+
+First inspect its actual implementation, controls, state flows and current behavior.
+
+Then redesign the entire experience.
+
+Requirements:
+
+- Clear visual grouping of related settings.
+- Logical section hierarchy.
+- Better explanatory subtitles.
+- Well-designed cards and separators.
+- Intuitive switches and sliders.
+- Clear labels and current values.
+- Proper spacing and touch targets.
+- Contextual descriptions.
+- Useful previews where relevant.
+- Consistent alignment.
+- No unnecessary empty cards.
+- No confusing nested layouts.
+
+Create a more intuitive structure for related behavior controls.
+
+Each setting must preserve its existing state, callback and persistence behavior.
+
+Do not change the underlying notification behavior simply to make the UI easier.
+
+# 6. REAL ANIMATIONS FOR INTERACTIONS
+
+The previous implementation does not have sufficiently polished animations.
+
+Implement purposeful animations throughout the application.
+
+Most importantly, when a toggle is switched ON or OFF, the UI must respond with a smooth visual transition.
+
+Examples:
+
+- Switch thumb movement with spring animation.
+- Track color transition.
+- Subtle state-change feedback.
+- Animated expansion of dependent settings.
+- Animated visibility for optional configuration sections.
+- Smooth slider updates.
+- Animated selection indicators.
+- Tab transitions.
+- Bottom navigation state transitions.
+- Card press feedback.
+- Dialog and bottom sheet enter/exit transitions.
+- Theme preview changes.
+- Loading, success and error feedback.
+
+Use appropriate Compose animation APIs:
+- updateTransition
+- animateColorAsState
+- animateContentSize
+- AnimatedVisibility
+- AnimatedContent
+- spring
+- animateDpAsState
+
+Rules:
+
+- Animate actual state changes, not fake decorative activity.
+- Do not delay functional setting changes unnecessarily.
+- Do not introduce infinite animations on inactive screens.
+- Respect system animation settings and reduced-motion preferences where supported.
+- Avoid excessive recompositions.
+- Maintain smooth scrolling and battery efficiency.
+
+Create reusable motion specifications in the design system.
+
+# 7. FIX DESIGN TAB — GRID, CAROUSEL AND BLACK SIDE BAR
+
+The Design tab currently has a glitchy top grid and swipeable section.
+
+Reported problems:
+
+- Top grid layout feels unstable.
+- Swipe interaction is glitchy.
+- A black bar appears along the side.
+- Carousel animation feels poor.
+- Spacing and clipping are inconsistent.
+
+Investigate the actual root cause instead of applying visual patches.
+
+Inspect:
+
+- LazyVerticalGrid and LazyRow constraints.
+- HorizontalPager configuration.
+- Nested scrolling.
+- Parent and child clipping.
+- Content padding.
+- Window insets.
+- System bar backgrounds.
+- Page width calculations.
+- Modifier order.
+- Graphics layers.
+- Animated visibility and size transitions.
+
+Fix:
+- Side black bar.
+- Incorrect clipping.
+- Horizontal overflow.
+- Grid alignment.
+- Swipe gestures.
+- Carousel snapping.
+- Page transitions.
+- Edge-to-edge layout.
+- Screen width calculations.
+
+Ensure the section behaves correctly across different display sizes and refresh rates.
+
+Do not hide the black bar using an arbitrary background overlay without fixing its root cause.
+
+# 8. ENTIRE APPLICATION REDESIGN
+
+Apply the refined visual identity consistently across ALL existing screens:
+
+- Home Dashboard.
+- Active Apps.
+- App Library.
+- Design Hub.
+- Theme Manager.
+- Theme Creator.
+- App Theme Editor.
+- Widget Picker.
+- Saved Widgets.
+- Widget Config.
+- Island Behaviour.
+- Island Settings.
+- Engine Settings.
+- DND Settings.
+- Permanent Island.
+- Navigation Customization.
+- Smart Actions.
+- Backup and Restore.
+- Import Preview.
+- Diagnostics.
+- Setup Health.
+- Onboarding.
+- Inline Reply.
+- All dialogs and bottom sheets.
+- All remaining settings and nested screens.
+
+Do not leave some screens using the old generic design.
+
+Use real existing screen inventory as the source of truth.
+
+# 9. THEME SYSTEM — REMOVE GENERIC AI LOOK
+
+The current theme editor and theme presentation also feel artificial and repetitive.
+
+Redesign:
+- Theme browsing.
+- Theme preview cards.
+- Theme creation.
+- Theme customization.
+- Theme colors.
+- Icon shapes.
+- Call styling.
+- Action buttons.
+- Per-app overrides.
+- Theme metadata.
+- Theme settings.
+
+Themes should look like curated product designs.
+
+Create several original, professionally art-directed theme presets.
+
+Each preset must have a distinct visual language rather than merely changing accent colors.
+
+Provide genuine previews of what each theme changes inside the actual notification island.
+
+Preserve:
+- Existing `.hbr` file format.
+- JSON schemas.
+- Theme serialization.
+- Theme import/export.
+- Existing theme compatibility.
+- Theme activation logic.
+
+Do not break existing user themes.
+
+# 10. DEVELOPER BRANDING — VAIBHLABS
+
+Update developer identity throughout the relevant app UI.
+
+Developer name:
+
+**VaibhLabs**
+
+About / Developer section:
+
+**Developed by VaibhLabs**
+
+Website-style button:
+
+**Visit VaibhLabs.com**
+
+For now, implement the click action to open this repository:
+
+`https://github.com/VaibhLabs/HyperCapsule`
+
+Ensure:
+- Correct external ACTION_VIEW behavior.
+- Only one intended repository destination.
+- Proper error handling when no compatible browser is available.
+- No unrelated navigation behavior changes.
+
+Do not falsely claim a website is already live if it is not.
+
+# 11. REMOVE UNWANTED SETTINGS SECTIONS
+
+In the Settings UI:
+
+- Remove the Version History section/button.
+- Remove the Special Thanks section/button.
+- Remove their associated navigation entries from the Settings interface.
+
+Do not delete required third-party copyright notices, license information, upstream notices or research attribution from legally required locations.
+
+Do not remove license access needed for open-source compliance.
+
+Only remove the requested user-facing Settings navigation sections.
+
+# 12. VERSION 1.00 STABLE
+
+Prepare HyperCapsule for its first stable release.
+
+Target display version:
+
+**1.00 Stable**
+
+Update consistently:
+- Application versionName.
+- Relevant version display strings.
+- About screen.
+- README.
+- Changelog.
+- Release documentation.
+- Build artifact naming where appropriate.
+
+Set versionCode correctly based on the existing project's current versionCode.
+
+Do not decrease versionCode.
+
+Do not blindly replace every numerical version in dependencies or unrelated code.
+
+# 13. REPLACE THE OLD VERSION UPDATE POPUP
+
+The current startup version-update popup must be removed/reworked.
+
+Replace it with a one-time **HyperCapsule v1.00 Stable Welcome / What's New dialog**.
+
+Design it as a premium release announcement.
+
+Suggested content:
+
+TITLE:
+HyperCapsule 1.00 Stable
+
+SUBTITLE:
+A new experience. Built for your everyday notifications.
+
+FEATURES:
+- Redesigned premium HyperCapsule interface.
+- Improved notification island experience.
+- Advanced theme customization.
+- Enhanced widget experience.
+- Refined settings and controls.
+- Improved navigation and interactions.
+- Performance and stability refinements.
+
+IMPORTANT:
+Only list features actually present and verified in the codebase.
+
+Show:
+- Version 1.00 Stable.
+- Attractive app branding.
+- Feature list with appropriate icons.
+- One clear Continue button.
+
+Behavior:
+- Display once for the stable 1.00 release.
+- Persist dismissal using the existing appropriate preferences mechanism.
+- Do not show it on every app launch.
+- Do not conflict with onboarding.
+- Do not interfere with existing update detection.
+- Prevent duplicate dialogs.
+
+# 14. CODE QUALITY AND PERFORMANCE
+
+Use the existing Kotlin + Jetpack Compose architecture.
+
+Maintain:
+- MVVM.
+- ViewModels.
+- StateFlow.
+- DataStore.
+- Room.
+- Existing repositories.
+- Existing services.
+
+Avoid:
+- Duplicate composables.
+- Bloated UI files.
+- Hardcoded scattered styling.
+- Unnecessary dependencies.
+- Unbounded animation loops.
+- Memory leaks.
+- Expensive image decoding on the main thread.
+- Excessive blur.
+- Unnecessary state collection.
+
+Use image loading appropriate to the project and keep bundled assets optimized.
+
+# 15. DOCUMENTATION
+
+Create or update:
+
+- `DESIGN_RESEARCH.md`
+- `ASSET_CREDITS.md`
+- `UI_REFINEMENT_REPORT.md`
+- `ANIMATION_IMPLEMENTATION_REPORT.md`
+- `VERSION_1.00_RELEASE_NOTES.md`
+- `VISUAL_REGRESSION_MATRIX.md`
+
+Document actual work, asset licensing, and unresolved issues.
+
+# 16. IMPLEMENTATION STRATEGY
+
+Do not redesign everything blindly in one pass.
+
+Proceed in this order:
+
+STAGE A:
+Design research, current UI inspection, asset strategy and visual direction.
+
+STAGE B:
+Refined design tokens, iconography, typography, motion system and real image assets.
+
+STAGE C:
+Island Behaviour and Settings redesign.
+
+STAGE D:
+Design Hub grid, carousel and black-bar bug fix.
+
+STAGE E:
+Theme Studio and theme browsing redesign.
+
+STAGE F:
+Remaining app-wide screen refinement.
+
+STAGE G:
+VaibhLabs branding, settings cleanup, stable v1.00 release popup.
+
+STAGE H:
+Visual regression checks, build and release preparation.
+
+# 17. CRITICAL PRESERVATION RULES
+
+- Make a Git commit or backup before major modifications.
+- Do not overwrite the only working copy.
+- Do not remove existing functionality.
+- Do not change notification engine behavior unnecessarily.
+- Do not change database schemas unnecessarily.
+- Do not break theme packages or backups.
+- Do not remove legal attribution.
+- Do not fabricate test results.
+- Do not claim an image is license-cleared without checking its source.
+- Do not stop after creating planning documents.
+
+Implement actual source changes.
+
+# FINAL QUALITY TARGET
+
+HyperCapsule must feel like a genuinely human-art-directed, premium Android product.
+
+Not an AI-generated dashboard.
+Not a collection of generic glowing cards.
+Not a template-based UI.
+
+Use intentional compositions, realistic visual assets, carefully crafted interactions, smooth animations, and consistent typography.
+
+Prioritize quality over rushing through screens.
+
+Start with the design research and inspect the actual code, then implement the complete refinement in the existing project.
