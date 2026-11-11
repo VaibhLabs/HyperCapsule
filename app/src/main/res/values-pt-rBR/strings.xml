@@ -36,7 +36,7 @@
     <string name="no_active_bridges_desc">Vá para a Biblioteca para ativar os apps.</string>
     <string name="no_apps_found">Nenhum app encontrado</string>
     <string name="version_template">Versão %s</string>
-    <string name="developer_credit">por D4vidDf</string>
+    <string name="developer_credit">by VaibhLabs</string>
     <string name="group_configuration">Configuração</string>
     <string name="system_setup">Configuração do Sistema</string>
     <string name="system_setup_subtitle">Corrigir permissões e bateria</string>
@@ -48,12 +48,12 @@
     <string name="permanent_island_hide_landscape">Ocultar na Horizontal</string>
     <string name="group_about">Sobre</string>
     <string name="developer">Desenvolvedor</string>
-    <string name="developer_subtitle">Visite d4viddf.com</string>
+    <string name="developer_subtitle">Visit vaibhlabs.com</string>
     <string name="source_code">Código Fonte</string>
     <string name="source_code_subtitle">Repositório GitHub</string>
     <string name="licenses">Licenças de Código Aberto</string>
     <string name="licenses_subtitle">Software de terceiros</string>
-    <string name="footer_made_with_love">Feito com ❤️ na Espanha</string>
+    <string name="footer_made_with_love">Made in India 🇮🇳</string>
     <string name="app_health_desc">Certifique-se de que todas as verificações estejam verdes para que o app funcione corretamente em segundo plano.</string>
     <string name="req_permissions">Permissões Necessárias</string>
     <string name="notif_access">Acesso às Notificações</string>

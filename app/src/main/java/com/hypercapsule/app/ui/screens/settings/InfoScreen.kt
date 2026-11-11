@@ -257,7 +257,7 @@ fun InfoScreen(
                                     try {
                                         val intent = android.content.Intent(
                                             android.content.Intent.ACTION_VIEW,
-                                            "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                                            "https://vaibhlabs.com".toUri()
                                         )
                                         context.startActivity(intent)
                                     } catch (_: Exception) {}
@@ -284,7 +284,7 @@ fun InfoScreen(
                             try {
                                 val intent = android.content.Intent(
                                     android.content.Intent.ACTION_VIEW,
-                                    "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                                    "https://vaibhlabs.com".toUri()
                                 )
                                 context.startActivity(intent)
                             } catch (_: Exception) {}
@@ -300,6 +300,15 @@ fun InfoScreen(
                     text = stringResource(R.string.footer_made_with_love).parseBold(),
                     style = typography.bodySmall,
                     color = colors.textTertiary
+                )
+
+                Spacer(modifier = Modifier.height(spacing.extraSmall))
+
+                Text(
+                    text = "#ProudToBeIndian",
+                    style = typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = colors.primary
                 )
 
                 Spacer(modifier = Modifier.height(spacing.huge))

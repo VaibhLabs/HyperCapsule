@@ -46,7 +46,7 @@
     <string name="no_apps_found">アプリが見つかりません</string>
 
     <string name="version_template">バージョン %s</string>
-    <string name="developer_credit">by D4vidDf</string>
+    <string name="developer_credit">by VaibhLabs</string>
 
     <string name="group_configuration">設定</string>
     <string name="system_setup">システム設定</string>
@@ -54,12 +54,12 @@
 
     <string name="group_about">アプリについて</string>
     <string name="developer">開発者</string>
-    <string name="developer_subtitle">d4viddf.comにアクセス</string>
+    <string name="developer_subtitle">Visit vaibhlabs.com</string>
     <string name="source_code">ソースコード</string>
     <string name="source_code_subtitle">GitHubリポジトリ</string>
     <string name="licenses">オープンソースライセンス</string>
     <string name="licenses_subtitle">サードパーティ製ソフトウェア</string>
-    <string name="footer_made_with_love">スペインで❤️を込めて制作</string>
+    <string name="footer_made_with_love">Made in India 🇮🇳</string>
 
     <string name="app_health_desc">アプリがバックグラウンドで正しく動作するには、すべての項目が緑色である必要があります。</string>
     <string name="req_permissions">必要な権限</string>

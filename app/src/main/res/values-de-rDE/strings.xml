@@ -36,7 +36,7 @@
     <string name="no_active_bridges_desc">Öffne die Bibliothek, um Apps zu aktivieren.</string>
     <string name="no_apps_found">Keine Apps gefunden</string>
     <string name="version_template">Version %s</string>
-    <string name="developer_credit">von D4vidDf</string>
+    <string name="developer_credit">by VaibhLabs</string>
     <string name="group_configuration">Konfiguration</string>
     <string name="system_setup">Systemeinrichtung</string>
     <string name="system_setup_subtitle">Berechtigungen &amp; Akku optimieren</string>
@@ -47,12 +47,12 @@
     <string name="permanent_island_width">Island Width</string>
     <string name="group_about">Über</string>
     <string name="developer">Entwickler</string>
-    <string name="developer_subtitle">Besuche d4viddf.com</string>
+    <string name="developer_subtitle">Visit vaibhlabs.com</string>
     <string name="source_code">Quellcode</string>
     <string name="source_code_subtitle">GitHub-Repository</string>
     <string name="licenses">Open-Source-Lizenzen</string>
     <string name="licenses_subtitle">Software von Drittanbietern</string>
-    <string name="footer_made_with_love">Mit ❤️ in Spanien erstellt</string>
+    <string name="footer_made_with_love">Made in India 🇮🇳</string>
     <string name="app_health_desc">Stelle sicher, dass alle Prüfungen grün sind, damit die App korrekt im Hintergrund läuft.</string>
     <string name="req_permissions">Erforderliche Berechtigungen</string>
     <string name="notif_access">Benachrichtigungszugriff</string>

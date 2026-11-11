@@ -36,7 +36,7 @@
     <string name="no_active_bridges_desc">Buka Pustaka untuk mengaktifkan aplikasi.</string>
     <string name="no_apps_found">Aplikasi tidak ditemukan</string>
     <string name="version_template">Versi %s</string>
-    <string name="developer_credit">oleh D4vidDf</string>
+    <string name="developer_credit">by VaibhLabs</string>
     <string name="group_configuration">Konfigurasi</string>
     <string name="system_setup">Pengaturan Sistem</string>
     <string name="system_setup_subtitle">Perbaiki perizinan &amp; baterai</string>
@@ -47,12 +47,12 @@
     <string name="permanent_island_width">Lebar Island</string>
     <string name="group_about">Tentang</string>
     <string name="developer">Pengembang</string>
-    <string name="developer_subtitle">Kunjungi d4viddf.com</string>
+    <string name="developer_subtitle">Visit vaibhlabs.com</string>
     <string name="source_code">Kode Sumber</string>
     <string name="source_code_subtitle">Repository GitHub</string>
     <string name="licenses">Lisensi Open Source</string>
     <string name="licenses_subtitle">Perangkat lunak pihak ketiga</string>
-    <string name="footer_made_with_love">Dibuat dengan ❤️ di Spanyol</string>
+    <string name="footer_made_with_love">Made in India 🇮🇳</string>
     <string name="app_health_desc">Pastikan semua tanda centang berwarna hijau agar aplikasi dapat berjalan dengan baik di latar belakang.</string>
     <string name="req_permissions">Diperlukan Perizinan</string>
     <string name="notif_access">Akses Pemberitahuan</string>
