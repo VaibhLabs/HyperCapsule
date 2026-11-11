@@ -1,501 +1,616 @@
-# HYPERCAPSULE — FINAL POLISH & STABILITY UPDATE
-## RED AMOLED × LIQUID GLASS × PREMIUM ANDROID EXPERIENCE
+# HYPERCAPSULE — FORENSIC BUG REMEDIATION & PRODUCTION HARDENING
 
-**Project:** `D:\HyperCapsule`
+## ROLE
 
-You are working on the existing HyperCapsule Android application.
+Act as a Principal Android Engineer, Kotlin Architect, Jetpack Compose Specialist, and QA Automation Engineer.
 
-Act as a senior Android engineer, Jetpack Compose specialist, UI/UX designer, motion designer, and performance optimization engineer.
+You are authorized to investigate, fix, test, and harden the existing HyperCapsule Android application.
 
-The application is already functional and has undergone its major UI redesign.
+Project Root: `D:\HyperCapsule`
 
-Now perform a comprehensive final refinement to make HyperCapsule feel like a premium, professionally designed Android product.
+Application: HyperCapsule v1.00 Stable  
+Application ID: `com.hypercapsule.app`  
+Reported upstream base: HyperBridge v0.5.7  
+Current version code: 34
 
-This is an implementation task. Modify actual source code, not just documentation.
+You have explicit authorization to modify application source code for the purpose of fixing verified defects identified in the completed forensic audit.
 
-# 1. NEW VISUAL IDENTITY — SUBTLE RED AMOLED
+This is an implementation task, not another documentation-only audit.
 
-The existing AMOLED dark and cyan design is good, but it needs a more distinctive identity.
+---
 
-Introduce a carefully balanced RED × AMOLED × LIQUID GLASS color direction.
+# PHASE 1 — READ AND UNDERSTAND THE FORENSIC AUDIT
 
-IMPORTANT: Do not turn the entire application red.
+Before modifying anything, read ALL files inside:
 
-Keep the existing dark foundation and introduce restrained red accents.
+`D:\HyperCapsule\FORENSIC_AUDIT\`
 
-Suggested palette:
+Required reports:
 
-- AMOLED Background: `#080809`
-- Primary Surface: `#141419`
-- Elevated Surface: `#1B1B22`
-- Glass Border: `#34343D`
-- Primary Red: `#FF454F`
-- Soft Red: `#E85D68`
-- Deep Red Tint: `#35191E`
-- Secondary Cyan: `#35C8F5`
-- Primary Text: `#F5F5F7`
-- Secondary Text: `#A4A4B0`
+1. `01_LOCAL_BASELINE.md`
+2. `02_UPSTREAM_BUG_REFERENCE.md`
+3. `03_PERMANENT_ISLAND_AUDIT.md`
+4. `04_NOTIFICATION_ENGINE_AUDIT.md`
+5. `05_DEVICE_COMPATIBILITY_AUDIT.md`
+6. `06_ADDITIONAL_BUG_DISCOVERY.md`
+7. `07_RECOMMENDED_FIXES.md`
+8. `08_FINAL_RISK_ASSESSMENT.md`
 
-Design rules:
+Understand the existing architecture and reported defects.
 
-- Red should be the primary brand accent.
-- Cyan should remain a secondary functional accent where appropriate.
-- Use red for selected navigation, active states, important actions, selection indicators and subtle highlights.
-- Avoid large solid red backgrounds.
-- Avoid excessive neon borders.
-- Avoid rainbow gradients.
-- Maintain excellent contrast in AMOLED dark mode.
-- Keep light mode functional and visually consistent.
+IMPORTANT:
 
-Create centralized semantic design tokens.
+The reports contain hypotheses and technical conclusions. Do not assume every claim is correct.
 
-Do not scatter hardcoded colors across screens.
+For every finding:
 
-# 2. PREMIUM GLASS, BLUR AND GLOW EFFECTS
+- Locate the actual current source code.
+- Verify that the described code still exists.
+- Inspect the complete calling chain.
+- Verify API contracts, units, threading behavior, lifecycle, and Android version compatibility.
+- Identify false positives and unsupported assumptions.
+- Only implement a fix when the defect is supported by actual code evidence.
 
-Improve the existing Liquid Glass design system.
+Do not blindly copy proposed code snippets from the audit.
 
-Implement tasteful visual depth:
+---
 
-- Translucent glass cards.
-- Subtle background blur.
-- Fine specular borders.
-- Soft red ambient glow.
-- Controlled cyan secondary highlights.
-- Smooth elevation transitions.
-- Natural shadows.
-- Layered surfaces.
-- Carefully designed modal sheets.
-- Premium floating navigation.
+# PHASE 2 — PROTECT THE EXISTING PROJECT
 
-Use actual blur only where it adds visual value.
-
-Performance requirements:
-
-- Avoid expensive full-screen real-time blur.
-- Do not apply heavy blur to every list item.
-- Prefer efficient alpha-blended surfaces when actual backdrop blur is unnecessary.
-- Reuse graphics layers where appropriate.
-- Avoid unnecessary overdraw.
-- Avoid continuous background animations.
-- Profile expensive rendering paths.
-- Ensure scrolling remains responsive.
-
-The result should look premium, not excessively decorated.
-
-# 3. CRITICAL BUG FIX — APP LIBRARY TOGGLE
-
-This is a high-priority functional bug.
-
-Current behavior:
-
-1. Open App Library.
-2. Enable an application using its switch.
-3. The application correctly appears in Active Apps.
-4. Attempting to disable the same application does not work correctly.
-
-Find and fix the actual root cause.
-
-Do not simply change the switch appearance.
-
-## Investigate
-
-Inspect:
-
-- `LibraryPage.kt`
-- `ActiveAppsPage.kt`
-- `AppListItem.kt`
-- `AppListViewModel.kt` or the relevant ViewModel
-- `AppPreferences`
-- `setPackageAllowed(...)`
-- Package allow-list DataStore implementation
-- All related StateFlows and collection logic.
-
-Trace the complete ON and OFF data flow.
-
-Check for:
-
-- Incorrect Boolean inversion.
-- Stale Compose state.
-- Incorrect callback parameters.
-- One-way state updates.
-- Incorrect set/list mutation.
-- Race conditions.
-- Incorrect Flow collection.
-- Duplicate state sources.
-- Missing persistence.
-- Optimistic UI state not reconciling with stored state.
-- Incorrect package identifier handling.
-
-## Required behavior
-
-For every application:
-
-- OFF → ON must enable it.
-- ON → OFF must disable it.
-- The change must reflect immediately in the UI.
-- Active Apps must update immediately.
-- Library must reflect the correct switch state.
-- The state must persist after navigating away and returning.
-- The state must persist after restarting the application.
-- Repeated toggling must continue to work reliably.
-
-Use the existing AppPreferences/DataStore source of truth.
-
-Ensure all screens observe the same authoritative state.
-
-Do not introduce a second independent preference store.
-
-Test multiple applications, not just one.
-
-Add appropriate tests for enabling and disabling packages.
-
-Do not mark this bug fixed until both directions have been tested.
-
-# 4. ISLAND BEHAVIOUR — COMPLETE UI REFINEMENT
-
-The current Island Behaviour screen looks unfinished.
-
-Rebuild its visual hierarchy.
-
-Requirements:
-
-- Improve the top preview area.
-- Reduce unnecessary empty space.
-- Give each strategy option adequate height.
-- Prevent text clipping.
-- Use clear descriptions.
-- Make selection states visually obvious.
-- Add proper spacing between cards.
-- Use consistent icon sizing.
-- Improve radio selection controls.
-- Add subtle animated selection indicators.
-- Use red accents for selected strategies.
-- Make the layout responsive.
-
-Preserve all three existing strategies:
-
-1. First Come, First Served.
-2. Most Recent.
-3. Custom Priority.
-
-Do not change their underlying behavior.
-
-# 5. SETTINGS AND DEVELOPER BRANDING
-
-Completely eliminate obsolete developer branding from the application UI.
-
-Developer identity:
-
-**VaibhLabs**
-
-Required changes:
-
-- Replace `D4vidDf` with `VaibhLabs` in appropriate app branding locations.
-- Replace `d4viddf.com` with `VaibhLabs.com`.
-- Replace `Made with ❤️ in Spain` with `Made with ❤️ in India`.
-- Update About screen branding.
-- Update developer profile text.
-- Update app metadata and release presentation where appropriate.
-
-Developer button:
-
-**Visit VaibhLabs.com**
-
-For now, clicking it should open:
-
-`https://github.com/VaibhLabs/HyperCapsule`
-
-Use a proper Android ACTION_VIEW intent.
-
-Do not invent a live website or claim that the website is operational.
-
-Search the entire application UI and resources for obsolete personal branding.
-
-Retain required upstream legal notices and license attribution.
-
-# 6. DESIGN HUB — FIX AND POLISH
-
-Inspect the Design tab carefully.
-
-## Carousel
-
-Fix:
-- Glitchy horizontal swiping.
-- Incorrect page clipping.
-- Black side bar.
-- Incorrect card width.
-- Inconsistent spacing.
-- Unstable snapping.
-- Poor page transitions.
-
-Investigate actual layout constraints and insets.
-
-Do not hide rendering defects using arbitrary overlays.
-
-Implement smooth pager animations and stable indicators.
-
-## Feature cards
-
-Customization:
-- Keep this card.
-- Make it functional.
-- Clicking it must open the actual Theme Creator or appropriate customization destination.
-- Do not create a fake navigation action.
-
-Pro Features:
-- Remove this card entirely for now.
-- Remove any related fake premium or purchase action.
-- Do not remove unrelated existing functionality.
-
-Community:
-- Keep only if functional.
-- Clicking it should open:
-  `https://github.com/VaibhLabs/HyperCapsule`
-- Use the official repository as the community destination for now.
-- Do not invent a Discord or Telegram community.
-
-Ensure all cards have consistent visual dimensions and responsive behavior.
-
-# 7. THEME STUDIO REFINEMENT
-
-The Theme Studio must feel professionally art-directed.
-
-Improve:
-
-- Theme browsing.
-- Theme preview cards.
-- Theme selection.
-- Theme Creator.
-- App-specific themes.
-- Color selection.
-- Icon customization.
-- Call styling.
-- Action customization.
-- Theme metadata editor.
-
-Use a more restrained red-accented design identity.
-
-Do not make every theme look identical.
-
-Each theme preset should have its own distinct visual composition.
-
-Improve previews so users can understand what their selected theme actually changes.
+HyperCapsule is already customized, branded, built, and tested.
 
 Preserve:
 
-- `.hbr` compatibility.
-- Existing theme JSON schemas.
-- Theme import/export.
-- Theme activation.
-- Existing saved user themes.
-- Serialization and deserialization.
+- Existing Red AMOLED design.
+- Liquid Glass refinements.
+- Application branding and icon.
+- Existing navigation and screen layouts.
+- Design Hub and Theme Studio.
+- Existing settings and preferences.
+- Database schema and stored user data.
+- Notification translators and supported notification types.
+- Permanent Island behavior.
+- Shizuku integration.
+- Inline Reply functionality.
+- Existing theme import/export functionality.
+- Existing signed production APK.
+- Existing application ID and signing configuration.
+- Existing package structure and architecture.
 
-Do not break existing theme files.
+STRICT REQUIREMENTS:
 
-# 8. ANIMATION SYSTEM — SMOOTH AND RESPONSIVE
+1. Never delete or replace working features just to simplify implementation.
+2. Never rewrite the entire NotificationReaderService.
+3. Never replace the application architecture.
+4. Never remove Shizuku functionality without proving it is unnecessary.
+5. Never remove Chinese ROM support to optimize Global ROM behavior.
+6. Never remove existing settings or silently change their defaults.
+7. Never modify the production APK.
+8. Never expose secrets, signing passwords, or private keys in reports or logs.
+9. Do not change application ID.
+10. Avoid unnecessary dependency upgrades.
 
-The entire application needs consistent, purposeful motion.
+Create a backup or Git checkpoint before modifying source files.
 
-Implement reusable motion specifications.
+Do not overwrite the existing production APK.
 
-## Toggle interactions
+---
 
-When toggled ON or OFF:
+# PHASE 3 — IMPLEMENT VERIFIED BUG FIXES
 
-- Smooth thumb movement.
-- Animated track color.
-- Subtle scale feedback.
-- State transition feedback.
-- Animate dependent settings when they appear or disappear.
+Investigate and remediate the following targets.
 
-## Other interactions
+## BUG 01 — Notification Timeout Mismatch (#410)
 
-- Animated card selection.
-- Smooth navigation indicator movement.
-- Pager transitions.
-- AnimatedContent for changing screen content.
-- Smooth expandable settings.
-- Bottom sheet entrance and exit.
-- Dialog transitions.
-- Theme preview transitions.
-- Slider feedback.
-- Button press animations.
-- Subtle haptic feedback where appropriate.
+Target files:
 
-Use suitable Jetpack Compose APIs:
-
-- updateTransition
-- AnimatedVisibility
-- AnimatedContent
-- animateColorAsState
-- animateContentSize
-- animateDpAsState
-- spring
-- animateFloatAsState
-
-Do not animate everything unnecessarily.
-
-Animations must never delay actual setting changes.
-
-Respect system animation settings and reduced-motion behavior where supported.
-
-# 9. APP-WIDE CONSISTENCY
-
-Review every screen and component.
-
-Ensure:
-
-- Consistent spacing.
-- Consistent typography.
-- Consistent icon sizing.
-- Consistent red accent usage.
-- Correct dark and light themes.
-- Correct system bar insets.
-- No text clipping.
-- No overlapping elements.
-- No horizontal overflow.
-- No unnecessary empty space.
-- Proper touch targets.
-- Smooth scrolling.
-- Responsive layouts.
-
-Check Home, Active Apps, Library, Design, Theme Manager, Theme Creator, Settings, all nested settings, widgets, dialogs, sheets and onboarding.
-
-Do not leave old inconsistent components behind.
-
-# 10. PERFORMANCE — SMOOTH, NOT HEAVY
-
-Target a consistently responsive experience on real Android devices, including 120Hz displays where supported.
+- `MessageTranslator.kt`
+- `StandardTranslator.kt`
+- `DownloadTranslator.kt`
+- `IslandConfig.kt`
 
 Investigate:
 
-- Unnecessary recompositions.
-- Unstable Compose parameters.
-- Missing LazyColumn/LazyGrid keys.
-- Excessive graphics layers.
-- Expensive blur operations.
-- Large image decoding.
-- Main-thread work.
-- Unnecessary Flow subscriptions.
+- Whether timeout values are stored in seconds.
+- Whether HyperIsland Kit expects milliseconds.
+- Whether `floatTimeout` uses the same unit.
+- Whether all translator implementations follow the same contract.
+
+If the mismatch is confirmed:
+
+- Implement consistent seconds-to-milliseconds conversion.
+- Use safe Long arithmetic.
+- Avoid integer overflow.
+- Preserve user-configured timeout values.
+- Ensure default settings remain unchanged.
+- Avoid double conversion.
+- Centralize conversion logic if appropriate.
+
+Test:
+
+- Default timeout.
+- Custom timeout.
+- Floating timeout.
+- Download notifications.
+- Message notifications.
+- Standard notifications.
+
+Expected behavior: notifications should remain visible for the configured duration.
+
+## BUG 02 — Discord Voice Notification Disappearance (#438)
+
+Target:
+
+`NotificationReaderService.kt`
+
+Investigate:
+
+- `recentlyRemovedKeys`
+- `onNotificationRemoved()`
+- `onNotificationPosted()`
+- `forceDismiss()`
+- Notification key lifecycle.
+- Ongoing notification reposts.
+
+If confirmed:
+
+- Prevent legitimate ongoing call notifications from being discarded due to rapid atomic reposts.
+- Preserve normal deduplication for ordinary notifications.
+- Avoid duplicate islands.
+- Correctly process mute/unmute updates.
+- Preserve notification removal behavior.
+
+Test rapid notification remove/repost sequences, including Discord voice notifications.
+
+## BUG 03 — Permanent Island Conflicts (#445)
+
+Target:
+
+- `PermanentIslandManager.kt`
+- `NotificationReaderService.kt`
+
+Investigate:
+
+- `desiredActive()`
+- `reconcile()`
+- `nativeIslands`
+- MediaStyle detection.
+- MediaSession notifications.
+- Navigation notifications.
+- `syncNotifications()`.
+- `PERMANENT_BRIDGE_ID = 9999`.
+- `activeIslands` lifecycle.
+
+If confirmed:
+
+- Correctly detect supported native media and navigation notifications.
+- Avoid rigid template matching where Android notification categories or MediaSession data provide more reliable information.
+- Prevent the Permanent Island from incorrectly overriding an active bridged island.
+- Ensure periodic reconciliation does not repeatedly dispatch ID 9999 over active notifications.
+- Preserve correct restoration after media/navigation activity ends.
+- Avoid flickering and stale island states.
+
+Do not introduce broad package-name matching that incorrectly classifies unrelated notifications.
+
+Test:
+
+- Spotify playback.
+- Google Maps navigation.
+- Media notification updates.
+- Multiple simultaneous notifications.
+- Media pause and dismissal.
+- Screen off/on.
+- Service reconnection.
+- Permanent Island enabled/disabled.
+
+## BUG 04 — Inline Reply Touch Interception (#450)
+
+Target:
+
+`InlineReplyService.kt`
+
+Investigate:
+
+- WindowManager LayoutParams.
+- Overlay dimensions.
+- `FLAG_NOT_TOUCH_MODAL`.
+- `FLAG_NOT_FOCUSABLE`.
+- `FLAG_LAYOUT_NO_LIMITS`.
+- Compose root modifiers.
+- Keyboard and IME behavior.
+- Back navigation.
+- Predictive back behavior.
+- Overlay cleanup.
+
+If confirmed:
+
+- Restrict touch interception to the actual inline reply interface.
+- Ensure outside touches reach the underlying application where appropriate.
+- Preserve keyboard focus and text input.
+- Ensure overlay cleanup on every exit path.
+- Handle service destruction and exceptional lifecycle termination.
+- Prevent orphaned transparent overlays.
+
+Do not simply add `FLAG_NOT_TOUCH_MODAL` while retaining an incorrectly sized full-screen touchable window.
+
+Test:
+
+- Gboard.
+- SwiftKey where available.
+- Gesture navigation.
+- Three-button navigation.
+- Back button.
+- Rotation.
+- Screen locking.
+- Service interruption.
+- Outside touch handling.
+
+## BUG 05 — Notification Shade Duplication (#441)
+
+Target:
+
+- `LiveUpdateTranslator.kt`
+- `NotificationReaderService.kt`
+- Notification channel configuration.
+
+Investigate:
+
+- `config.isShowShade`.
+- Native Live Updates.
+- Bridged notification posting.
+- Original notification cancellation.
+- Channel importance.
+- Android 16+ ongoing notification behavior.
+- Xiaomi-specific focus notification extras.
+
+If confirmed:
+
+- Make Live Updates honor the application's intended shade configuration wherever the platform permits.
+- Correctly distinguish the original notification from the bridged notification.
+- Avoid creating duplicate notifications.
+- Preserve notification history and user expectations.
+- Respect Android notification channel limitations.
+
+IMPORTANT:
+
+Do not claim that `PRIORITY_MIN`, `setGroupSummary(false)`, or changing a notification builder automatically hides a notification from the shade.
+
+Use supported Android APIs and verified Xiaomi-specific behavior.
+
+If Android or HyperOS prevents a requested behavior, document the limitation instead of implementing a misleading workaround.
+
+## BUG 06 — Shizuku Notification Dispatch Delay (#405)
+
+Target:
+
+- `ShizukuManager.kt`
+- `PrivilegedServiceImpl.kt`
+- `XmsfNetworkHelper.kt`
+
+Investigate:
+
+- `notifyMutex`.
+- `notify()`.
+- `cancel()`.
+- `notifyWithCancel()`.
+- Coroutine scope lifecycle.
+- Binder calls.
+- Reflection methods.
+- `CountDownLatch`.
+- `OP_TIMEOUT_MS`.
+- Chinese ROM detection.
+- Global ROM behavior.
+
+If confirmed:
+
+- Avoid unnecessary serialization.
+- Prevent notification dispatch from waiting on unrelated operations.
+- Use structured coroutine scopes where appropriate.
+- Prevent unmanaged coroutine accumulation.
+- Add appropriate timeout and failure handling.
+- Avoid blocking the main thread.
+- Keep Chinese ROM XMSF compatibility.
+- Avoid invoking unsupported reflection methods without verification.
+- Ensure failed privileged operations cannot stall ordinary notification delivery.
+
+Do not disable the entire Chinese ROM workaround.
+
+Do not assume every Android 16/17 device has identical Binder interfaces.
+
+## BUG 07 — Notification Listener Boot Lifecycle (LAT-02)
+
+Target:
+
+`BootReceiver.kt`
+
+Investigate:
+
+- `toggleNotificationListener()`.
+- Component enabled state.
+- Notification listener permission.
+- Boot receiver lifecycle.
+- `requestRebind()`.
+- Android notification listener restrictions.
+
+If confirmed:
+
+- Remove unsafe component state manipulation.
+- Preserve the user's Notification Access permission.
+- Use supported listener reconnection mechanisms.
+- Handle reboot and service disconnection safely.
+
+Test reboot lifecycle and listener reconnection.
+
+## BUG 08 — Tablet Compatibility (#444)
+
+Target:
+
+- `XiaomiNotificationHelper.kt`
+- `DeviceUtils.kt`
+- `PermanentIslandManager.kt`
+
+Investigate:
+
+- `isSupportIsland()`.
+- `hasFocusPermission()`.
+- `canShowFocus`.
+- Display cutout.
+- Screen size.
+- Orientation.
+- Tablet form-factor detection.
+- Xiaomi Pad SystemUI restrictions.
+
+If an application-side issue is confirmed:
+
+- Correct tablet-specific orientation handling.
+- Avoid incorrectly suppressing the island on large landscape displays.
+- Preserve existing phone behavior.
+- Provide accurate troubleshooting when firmware blocks third-party focus notifications.
+
+Do not claim to bypass Xiaomi firmware restrictions.
+
+---
+
+# PHASE 4 — ADDITIONAL LATENT DEFECTS
+
+Investigate all seven findings from `06_ADDITIONAL_BUG_DISCOVERY.md`.
+
+### LAT-01: PrivilegedServiceImpl reflection failure
+
+Verify actual Binder method availability and timeout behavior before changing anything.
+
+### LAT-02: BootReceiver notification listener state
+
+Coordinate this with BUG 07. Do not implement two conflicting fixes.
+
+### LAT-03: ShizukuManager coroutine and mutex contention
+
+Investigate structured concurrency, dispatch starvation, cancellation, and lifecycle.
+
+Coordinate this with BUG 06.
+
+### LAT-04: ThemeRepository ZIP path handling
+
+Target:
+
+`ThemeRepository.kt`
+
+If confirmed, ensure ZIP entry names use portable forward-slash separators and preserve safe extraction behavior.
+
+Do not weaken ZIP traversal protections.
+
+### LAT-05: BaseTranslator bitmap allocation
+
+Target:
+
+`BaseTranslator.kt`
+
+Investigate:
+
+- Bitmap allocation count.
+- Canvas lifecycle.
+- Bitmap ownership.
+- Repeated icon transformations.
+- Memory churn.
+- Potential reuse opportunities.
+
+Optimize safely without recycling bitmaps still referenced by notifications or Compose.
+
+### LAT-06: Orphan bridge notification reaper
+
+Target:
+
+`NotificationReaderService.kt`
+
+Investigate:
+
+- `reapOrphanBridgeNotifications()`.
+- `reverseTranslations`.
+- `bridgeId` generation.
+- Hash collisions.
+- Notification synchronization.
+- Active notification lifecycle.
+
+Never cancel a valid active notification based only on an unreliable temporary map lookup.
+
+### LAT-07: Stale active widget entries
+
+Target:
+
+`NotificationReaderService.kt` and related widget management classes.
+
+Investigate:
+
+- `activeWidgets`.
+- Widget update broadcasts.
+- Failed widget rendering.
+- Cleanup on notification removal.
+- Service restart.
+
+Prevent stale entries and memory/resource leaks without prematurely removing healthy widgets.
+
+---
+
+# PHASE 5 — ADDITIONAL ENGINEERING REQUIREMENTS
+
+After fixing verified findings, inspect the following related areas:
+
+- Notification lifecycle races.
+- Duplicate notification identifiers.
+- Coroutine cancellation.
+- Service reconnection.
+- Boot persistence.
+- Shizuku disconnection.
+- Null notification extras.
+- Bitmap lifecycle.
+- Overlay cleanup.
+- Theme serialization and import/export.
+- Database migration safety.
+- Preference persistence.
+- Configuration restoration.
+- Notification grouping.
+- Timeout handling.
+- Package filtering.
 - Memory leaks.
-- Unbounded animation loops.
-- Nested scrolling conflicts.
+- Exception handling.
 
-Optimize only where actual problems exist.
+Only fix additional defects when supported by concrete source evidence.
 
-Use:
+Do not turn this into an unnecessary full application rewrite.
 
-- Stable keys.
-- remember and derivedStateOf where appropriate.
-- Lifecycle-aware Flow collection.
-- Efficient image loading.
-- Proper coroutine dispatchers.
-- Reusable components.
-- Lightweight motion.
+---
 
-Do not claim guaranteed zero lag.
+# PHASE 6 — TESTING AND VALIDATION
 
-Do not sacrifice visual quality or functionality for arbitrary optimization.
+After implementation:
 
-# 11. VERSION AND RELEASE IDENTITY
+1. Run the existing Gradle test suite.
+2. Run unit tests.
+3. Add regression tests for fixed defects where feasible.
+4. Run Kotlin compilation.
+5. Run Android lint if configured.
+6. Build the debug APK.
+7. Inspect build output for warnings and errors.
+8. Check application manifest and permissions.
+9. Verify version metadata.
+10. Confirm no production signing configuration was exposed or changed.
 
-Maintain the stable release identity:
+If a physical Xiaomi/POCO device is unavailable, clearly distinguish simulated tests from actual device validation.
 
-**HyperCapsule 1.00 Stable**
+Do not claim that a firmware-specific issue is fixed without testing on the relevant firmware.
 
-Ensure version display remains consistent.
+## Regression test matrix
 
-Keep the one-time stable release welcome popup.
+At minimum, validate:
 
-It must:
-- Display version 1.00 Stable.
-- Present verified release features.
-- Appear only once per appropriate release.
-- Avoid repeated launch popups.
-- Not interfere with onboarding.
+- Notification timeout.
+- Rapid notification updates.
+- Discord mute/unmute lifecycle.
+- Multiple active notifications.
+- Permanent Island restoration.
+- Media playback.
+- Navigation notifications.
+- Inline reply and keyboard.
+- Notification shade behavior.
+- Shizuku disconnected state.
+- Global ROM path.
+- Chinese ROM path where available.
+- Device reboot.
+- Theme export/import.
+- Widget cleanup.
 
-# 12. TESTING REQUIREMENTS
+---
 
-Test the following:
+# PHASE 7 — CODE QUALITY
 
-- Library app enable.
-- Library app disable.
-- Repeated enable/disable.
-- Active Apps synchronization.
-- State persistence after navigation.
-- State persistence after app restart.
-- Island Behaviour strategy selection.
-- Customization card navigation.
-- Community repository navigation.
-- Developer repository navigation.
-- Carousel swipe behavior.
-- Settings navigation.
-- Theme creation and activation.
-- Existing theme import/export.
-- Dark and light mode.
-- Animation behavior.
-- Screen scrolling and layout.
+All changes must follow:
 
-Run available Gradle build and test tasks.
+- Existing Kotlin conventions.
+- Existing package architecture.
+- Structured concurrency.
+- Lifecycle-aware resource management.
+- Null safety.
+- Defensive API handling.
+- Clear separation of responsibilities.
+- Minimal and focused diffs.
+- Meaningful comments only where necessary.
 
-Report actual results.
+Avoid:
 
-# 13. REQUIRED DELIVERABLES
+- Duplicate helper implementations.
+- Unnecessary abstraction layers.
+- Hardcoded device-specific assumptions.
+- Broad exception swallowing.
+- Main-thread blocking.
+- Unbounded coroutine scopes.
+- Unnecessary dependency additions.
+- Silent preference changes.
 
-Create or update:
+---
 
-- `FINAL_UI_POLISH_REPORT.md`
-- `APP_LIBRARY_TOGGLE_BUG_REPORT.md`
-- `ANIMATION_AUDIT.md`
-- `PERFORMANCE_AUDIT.md`
-- `VISUAL_REGRESSION_REPORT.md`
-- `VERSION_1.00_STABLE_CHANGELOG.md`
+# PHASE 8 — DOCUMENTATION
 
-Include:
+Create:
+
+`D:\HyperCapsule\REMEDIATION_REPORT\`
+
+Generate:
+
+1. `01_IMPLEMENTATION_SUMMARY.md`
+2. `02_FIXED_BUGS.md`
+3. `03_UNFIXED_OR_UNCONFIRMED.md`
+4. `04_FILES_MODIFIED.md`
+5. `05_TEST_RESULTS.md`
+6. `06_REGRESSION_RISKS.md`
+7. `07_BUILD_VALIDATION.md`
+8. `08_FINAL_RELEASE_READINESS.md`
+
+For each finding, document:
+
+- Original audit reference.
+- Whether the defect was actually verified.
+- Root cause.
 - Files modified.
-- Root causes identified.
-- Exact fixes implemented.
-- Tests performed.
-- Build status.
-- Remaining known issues.
+- What changed.
+- Tests executed.
+- Test results.
+- Remaining limitations.
+- Regression risks.
 
-# 14. STRICT IMPLEMENTATION RULES
+Do not mark a bug fixed unless the implementation and its validation support that claim.
 
-- Back up the current working project before major changes.
-- Preserve all existing functionality.
-- Do not rewrite working engine logic unnecessarily.
-- Do not remove existing database records.
-- Do not break Shizuku.
-- Do not break notification processing.
-- Do not break widgets.
-- Do not break backup and restore.
-- Do not break theme compatibility.
-- Do not remove required legal attribution.
-- Do not add unnecessary dependencies.
-- Do not create fake UI interactions.
-- Do not claim tests passed without running them.
+---
 
-Do not stop after generating reports or plans.
+# FINAL EXECUTION RULES
 
-Implement all requested changes directly in the existing project.
+You have authorization to implement verified bug fixes.
 
-# FINAL GOAL
+Do not stop after generating recommendations.
 
-HyperCapsule should feel like a premium, professionally engineered Android application.
+Work through the phases in order.
 
-Its visual identity should be:
+If one proposed fix is unsafe, unsupported, or likely to break existing behavior:
 
-**AMOLED Black + Subtle Crimson Red + Liquid Glass + Refined Cyan Details**
+- Do not force it.
+- Document the reason.
+- Continue with other safe, verified fixes.
 
-It should have:
-- Beautiful and consistent UI.
-- Smooth real interactions.
-- Tasteful blur and glow.
-- Reliable state management.
-- No broken toggles.
-- No glitchy navigation.
-- Excellent responsiveness.
-- A distinct VaibhLabs identity.
+If a major architectural decision is genuinely ambiguous and cannot be resolved safely from the codebase, pause only that specific change and explain the blocker.
 
-Quality, correctness and performance are more important than rushing.
+Do not ask for approval for ordinary, scoped bug fixes covered by this authorization.
+
+Do not modify the production APK or replace the release artifact.
+
+At completion, provide:
+
+1. Total bugs investigated.
+2. Total bugs confirmed.
+3. Total bugs fixed.
+4. Total findings rejected as false positives.
+5. Total findings left unresolved.
+6. Files modified.
+7. Tests passed and failed.
+8. Debug APK build location.
+9. Any remaining critical risks.
+
+**FINAL OBJECTIVE: Turn HyperCapsule v1.00 Stable into a more reliable, thoroughly tested Android application while preserving its existing identity, UI, features, compatibility, and production release.**
