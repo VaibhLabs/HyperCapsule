@@ -149,10 +149,12 @@ class AppPreferences(context: Context) {
     private fun String?.deserializeList(): List<String> = this?.split(",")?.filter { it.isNotEmpty() } ?: emptyList()
 
     private suspend fun save(key: String, value: String) {
+        memoryCache[key] = value
         dao.insert(AppSetting(key, value))
     }
 
     private suspend fun remove(key: String) {
+        memoryCache.remove(key)
         dao.delete(key)
     }
 

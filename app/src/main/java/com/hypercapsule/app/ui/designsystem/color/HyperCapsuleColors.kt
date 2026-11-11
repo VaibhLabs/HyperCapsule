@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * HyperCapsule Semantic Color Palette
- * Designed for "Liquid Glass × Material 3 Expressive × HyperOS Native × AMOLED Premium"
+ * Designed for "Red AMOLED × Liquid Glass × Premium Android Experience"
  */
 @Immutable
 data class HyperCapsuleColors(
@@ -24,6 +24,9 @@ data class HyperCapsuleColors(
     val primaryVariant: Color,
     val secondary: Color,
     val tertiary: Color,
+    val softRed: Color,
+    val deepRedTint: Color,
+    val secondaryCyan: Color,
     val success: Color,
     val warning: Color,
     val error: Color,
@@ -45,57 +48,63 @@ data class HyperCapsuleColors(
 
 val DarkHyperCapsuleColors = HyperCapsuleColors(
     isDark = true,
-    background = Color(0xFF07080A),
-    surfaceBase = Color(0xFF10131A),
-    surfaceCard = Color(0xFF161A24),
-    surfaceCardGlass = Color(0xCC161A24),
-    surfaceElevated = Color(0xFF1E2330),
-    surfaceElevatedGlass = Color(0xD91E2330),
-    borderHighlight = Color(0x24FFFFFF),
-    borderSubtle = Color(0x10FFFFFF),
-    primary = Color(0xFF00C7FF),
-    primaryVariant = Color(0xFF0A84FF),
-    secondary = Color(0xFF9D4EDD),
-    tertiary = Color(0xFFFF7043),
+    background = Color(0xFF080809),
+    surfaceBase = Color(0xFF141419),
+    surfaceCard = Color(0xFF141419),
+    surfaceCardGlass = Color(0xF0141419),
+    surfaceElevated = Color(0xFF1B1B22),
+    surfaceElevatedGlass = Color(0xF21B1B22),
+    borderHighlight = Color(0xFF34343D),
+    borderSubtle = Color(0xFF22222A),
+    primary = Color(0xFFFF454F), // Primary Red
+    primaryVariant = Color(0xFFE85D68), // Soft Red
+    secondary = Color(0xFF35C8F5), // Secondary Cyan
+    tertiary = Color(0xFF35191E), // Deep Red Tint
+    softRed = Color(0xFFE85D68),
+    deepRedTint = Color(0xFF35191E),
+    secondaryCyan = Color(0xFF35C8F5),
     success = Color(0xFF30D158),
     warning = Color(0xFFFFD60A),
-    error = Color(0xFFFF453A),
-    textPrimary = Color(0xFFF5F6F8),
-    textSecondary = Color(0xFFA0A5B5),
-    textTertiary = Color(0xFF6B7280),
+    error = Color(0xFFFF454F),
+    textPrimary = Color(0xFFF5F5F7),
+    textSecondary = Color(0xFFA4A4B0),
+    textTertiary = Color(0xFF6C6C7A),
     accentGradient = Brush.horizontalGradient(
-        listOf(Color(0xFF00C7FF), Color(0xFF0A84FF), Color(0xFF9D4EDD))
+        listOf(Color(0xFFFF454F), Color(0xFFE85D68), Color(0xFF35C8F5))
     ),
     cardGlowBrush = Brush.verticalGradient(
-        listOf(Color(0x1A00C7FF), Color(0x00000000))
+        listOf(Color(0x18FF454F), Color(0x00000000))
     )
 )
 
 val LightHyperCapsuleColors = HyperCapsuleColors(
     isDark = false,
-    background = Color(0xFFF6F8FC),
+    background = Color(0xFFF7F7FA),
     surfaceBase = Color(0xFFFFFFFF),
-    surfaceCard = Color(0xFFEFF2F7),
-    surfaceCardGlass = Color(0xEEFFFFFF),
-    surfaceElevated = Color(0xFFE4E8F0),
-    surfaceElevatedGlass = Color(0xF5FFFFFF),
-    borderHighlight = Color(0x18000000),
-    borderSubtle = Color(0x0C000000),
-    primary = Color(0xFF007AFF),
-    primaryVariant = Color(0xFF0056B3),
-    secondary = Color(0xFF7B2CBF),
-    tertiary = Color(0xFFE65100),
+    surfaceCard = Color(0xFFF0F0F5),
+    surfaceCardGlass = Color(0xF5FFFFFF),
+    surfaceElevated = Color(0xFFE6E6ED),
+    surfaceElevatedGlass = Color(0xFAFFFFFF),
+    borderHighlight = Color(0xFFD6D6E0),
+    borderSubtle = Color(0xFFE8E8F0),
+    primary = Color(0xFFE53945),
+    primaryVariant = Color(0xFFD32F2F),
+    secondary = Color(0xFF0097A7),
+    tertiary = Color(0xFFFFEBEE),
+    softRed = Color(0xFFE57373),
+    deepRedTint = Color(0xFFFFEBEE),
+    secondaryCyan = Color(0xFF0097A7),
     success = Color(0xFF28A745),
     warning = Color(0xFFFF9500),
-    error = Color(0xFFFF3B30),
-    textPrimary = Color(0xFF1A1D24),
-    textSecondary = Color(0xFF5F6573),
-    textTertiary = Color(0xFF8F95A3),
+    error = Color(0xFFE53945),
+    textPrimary = Color(0xFF16161C),
+    textSecondary = Color(0xFF5D5D6E),
+    textTertiary = Color(0xFF8E8E9F),
     accentGradient = Brush.horizontalGradient(
-        listOf(Color(0xFF007AFF), Color(0xFF5E5CE6))
+        listOf(Color(0xFFE53945), Color(0xFF0097A7))
     ),
     cardGlowBrush = Brush.verticalGradient(
-        listOf(Color(0x14007AFF), Color(0x00000000))
+        listOf(Color(0x10E53945), Color(0x00000000))
     )
 )
 

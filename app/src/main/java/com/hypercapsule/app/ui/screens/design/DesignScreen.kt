@@ -85,6 +85,7 @@ import com.hypercapsule.app.ui.designsystem.motion.tactilePress
 import com.hypercapsule.app.ui.designsystem.shapes.LocalHyperCapsuleShapes
 import com.hypercapsule.app.ui.designsystem.spacing.LocalHyperCapsuleSpacing
 import com.hypercapsule.app.ui.designsystem.typography.LocalHyperCapsuleTypography
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -98,6 +99,7 @@ fun DesignScreen(
     onNavigateToWidgets: () -> Unit,
     onNavigateToThemes: () -> Unit,
     onEditTheme: (String) -> Unit,
+    onNavigateToThemeCreator: () -> Unit = onNavigateToThemes,
     onLaunchPicker: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -169,6 +171,7 @@ fun DesignScreen(
         onNavigateToWidgets = onNavigateToWidgets,
         onNavigateToThemes = onNavigateToThemes,
         onEditTheme = onEditTheme,
+        onNavigateToThemeCreator = onNavigateToThemeCreator,
         onFabClick = { showBottomSheet = true },
         onSettingsClick = onSettingsClick
     )
@@ -244,6 +247,7 @@ fun DesignScreenContent(
     onNavigateToWidgets: () -> Unit,
     onNavigateToThemes: () -> Unit,
     onEditTheme: (String) -> Unit,
+    onNavigateToThemeCreator: () -> Unit,
     onFabClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -285,8 +289,8 @@ fun DesignScreenContent(
 
             Spacer(modifier = Modifier.height(spacing.small))
 
-            // Robust, Edge-to-Edge Hero Pager (Replaces experimental carousel)
-            StableHeroSection()
+            // Robust, Edge-to-Edge Hero Pager (Customization + Community only, Pro removed)
+            StableHeroSection(onNavigateToThemeCreator = onNavigateToThemeCreator)
 
             Spacer(modifier = Modifier.height(spacing.large))
 
@@ -352,32 +356,39 @@ data class HeroItem(
 
 /**
  * Stable Hero Pager using standard HorizontalPager with zero clip escapes or side black bars.
+ * Pro Features removed per specification; Customization and Community cards are fully functional.
  */
 @Composable
-fun StableHeroSection() {
+fun StableHeroSection(onNavigateToThemeCreator: () -> Unit) {
+    val context = LocalContext.current
+    val colors = LocalHyperCapsuleColors.current
+
     val items = listOf(
         HeroItem(
-            stringResource(R.string.design_hero_customization_title),
-            stringResource(R.string.design_hero_customization_subtitle),
-            "CUSTOMIZATION",
-            Color(0xFF00C7FF)
-        ) {},
+            title = stringResource(R.string.design_hero_customization_title),
+            subtitle = stringResource(R.string.design_hero_customization_subtitle),
+            badge = "CUSTOMIZATION",
+            color = colors.primary,
+            onClick = onNavigateToThemeCreator
+        ),
         HeroItem(
-            stringResource(R.string.design_hero_pro_title),
-            stringResource(R.string.design_hero_pro_subtitle),
-            "STUDIO PRO",
-            Color(0xFF0A84FF)
-        ) {},
-        HeroItem(
-            stringResource(R.string.design_hero_community_title),
-            stringResource(R.string.design_hero_community_subtitle),
-            "COMMUNITY",
-            Color(0xFF9D4EDD)
-        ) {}
+            title = stringResource(R.string.design_hero_community_title),
+            subtitle = stringResource(R.string.design_hero_community_subtitle),
+            badge = "COMMUNITY",
+            color = colors.secondary,
+            onClick = {
+                try {
+                    val intent = android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                    )
+                    context.startActivity(intent)
+                } catch (_: Exception) {}
+            }
+        )
     )
 
     val pagerState = rememberPagerState(pageCount = { items.size })
-    val colors = LocalHyperCapsuleColors.current
 
     Column(modifier = Modifier.fillMaxWidth()) {
         HorizontalPager(

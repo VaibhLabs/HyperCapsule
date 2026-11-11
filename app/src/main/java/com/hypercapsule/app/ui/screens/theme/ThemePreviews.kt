@@ -210,11 +210,11 @@ private fun CallIslandPreview(
 }
 
 @Composable
-private fun IslandPill(width: Dp, height: Dp, borderColor: Color = Color(0xFF333333), content: @Composable () -> Unit) {
+private fun IslandPill(width: Dp, height: Dp, borderColor: Color = Color(0xFF34343D), content: @Composable () -> Unit) {
     Surface(
         modifier = Modifier.size(width, height),
         shape = RoundedCornerShape(height / 2),
-        color = Color.Black,
+        color = Color(0xFF080809),
         border = BorderStroke(1.dp, borderColor),
         shadowElevation = 8.dp
     ) {

@@ -140,7 +140,7 @@ fun ActiveAppsPage(
                             Column(modifier = Modifier.animateItem()) {
                                 AppListItem(
                                     app = app,
-                                    onToggle = { viewModel.toggleApp(app.packageName, false) },
+                                    onToggle = { isEnabled -> viewModel.toggleApp(app.packageName, isEnabled) },
                                     onSettingsClick = { onConfig(app) },
                                 )
                                 HorizontalDivider(

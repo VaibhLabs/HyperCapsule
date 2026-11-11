@@ -138,7 +138,7 @@ fun LibraryPage(
                             Column(modifier = Modifier.animateItem()) {
                                 AppListItem(
                                     app = app,
-                                    onToggle = { viewModel.toggleApp(app.packageName, true) },
+                                    onToggle = { isEnabled -> viewModel.toggleApp(app.packageName, isEnabled) },
                                     onSettingsClick = { onConfig(app) },
                                 )
                                 HorizontalDivider(

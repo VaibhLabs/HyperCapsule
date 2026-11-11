@@ -230,6 +230,10 @@ fun HomeScreen(
                                             editingThemeId = themeId
                                             designRoute = DesignRoute.THEME_CREATOR
                                         },
+                                        onNavigateToThemeCreator = {
+                                            editingThemeId = null
+                                            designRoute = DesignRoute.THEME_CREATOR
+                                        },
                                         onLaunchPicker = { showWidgetPicker = true },
                                         onSettingsClick = onSettingsClick
                                     )
