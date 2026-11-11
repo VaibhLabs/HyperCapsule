@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
@@ -107,14 +107,3 @@ jobs:
                 body,
               });
             }
-
-      - name: Update Pre-release Debug APK (master only)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        continue-on-error: true
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: debug-latest
-          name: "Latest Debug Build"
-          body: "Automated debug APK build from the latest `master` branch commit."
-          prerelease: true
-          files: app/build/outputs/apk/debug/app-debug.apk

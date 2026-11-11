@@ -1,9 +1,9 @@
-# HyperCapsule 1.00 Stable — Official Release Notes
+# 🚀 HyperCapsule 1.00 Stable — Official Release Notes
 
-**Release Version:** 1.00 Stable (versionCode: 34)  
+**Release Version:** 1.00 Stable (`versionCode = 34`)  
 **Developer:** VaibhLabs  
-**Website / Repository:** [https://github.com/VaibhLabs/HyperCapsule](https://github.com/VaibhLabs/HyperCapsule)  
-**Date:** 2026-11-11  
+**Official Repository:** [https://github.com/VaibhLabs/HyperCapsule](https://github.com/VaibhLabs/HyperCapsule)  
+**Release Date:** November 11, 2026  
 
 ---
 
@@ -42,12 +42,15 @@ HyperCapsule reaches its first official stable release! Crafted by **VaibhLabs**
 
 ### 🏢 Developer Identity & Community
 - **VaibhLabs Official Branding:** Clear developer attribution throughout the application.
-- **Visit VaibhLabs.com:** Direct link button navigating safely to `https://github.com/VaibhLabs/HyperCapsule`.
+- **Official Links:** Developer action button links directly to official repository at `https://github.com/VaibhLabs/HyperCapsule`.
 - **Streamlined Settings:** Cleaned up redundant Version History and Special Thanks entries while keeping open-source license compliance intact.
 
 ---
 
-## 📦 Verified Release Artifacts
-- **File:** `HyperCapsule-Production-v1.00.apk`
-- **Signing Scheme:** Android APK Signature Scheme v2 & v3 (Signed with official release keystore)
-- **Target OS:** Android 15 & 16+ (SDK 35 - 37), Xiaomi HyperOS 1.0 / 2.0+
+## 📦 Verified Release Artifact Specifications
+
+- **Package Name:** `com.hypercapsule.app`
+- **Output Artifact:** `app/build/outputs/apk/release/app-release.apk`
+- **Signing Scheme:** Android APK Signature Scheme v1, v2, v3 & v4
+- **SDK Target:** `minSdk = 35` (Android 15), `compileSdk = 36` (Android 16 preview), `targetSdk = 37`
+- **Toolchain:** AGP 9.3.2, Gradle 9.5.0, Kotlin 2.3.21, JDK 21 LTS

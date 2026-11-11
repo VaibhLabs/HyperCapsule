@@ -27,7 +27,7 @@ app/build/
 local.properties
 gradle.properties.local
 
-# Keystores, certificates and private signing secrets
+# Keystores, signing properties and private secrets
 *.jks
 *.keystore
 *.key
@@ -35,6 +35,8 @@ gradle.properties.local
 *.p12
 *.bks
 hypercapsule-release.jks
+keystore.properties
+signing.properties
 
 # Proguard / R8 generated mappings and seeds
 proguard/
@@ -81,8 +83,26 @@ tmp/
 FORENSIC_AUDIT/
 REMEDIATION_REPORT/
 VISUAL_REVIEW/
-*AUDIT*.md
-*REPORT*.md
-*PLAN*.md
-*INVENTORY*.md
-*MATRIX*.md
+ANIMATION_AUDIT.md
+ANIMATION_IMPLEMENTATION_REPORT.md
+APP_LIBRARY_TOGGLE_BUG_REPORT.md
+BRANDING_MIGRATION_PLAN.md
+CODE_CLEANUP_PLAN.md
+DESIGN_RESEARCH.md
+FEATURE_PRESERVATION_INVENTORY.md
+FINAL_PHASE1_REPORT.md
+FINAL_UI_POLISH_REPORT.md
+PACKAGE_MIGRATION_PLAN.md
+PERFORMANCE_AUDIT.md
+PROJECT_AUDIT.md
+UI_COMPONENT_INVENTORY.md
+UI_FEATURE_PRESERVATION_REPORT.md
+UI_INTERACTION_MATRIX.md
+UI_REDESIGN_PLAN.md
+UI_REDESIGN_REPORT.md
+UI_REFINEMENT_REPORT.md
+UI_SCREEN_COMPLETION_MATRIX.md
+UI_SCREEN_INVENTORY.md
+VISUAL_REGRESSION_MATRIX.md
+VISUAL_REGRESSION_REPORT.md
+VISUAL_REVIEW_REPORT.md

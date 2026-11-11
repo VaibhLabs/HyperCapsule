@@ -25,7 +25,7 @@
         h1, h2, h3 {
             color: inherit;
         }
-        h1 { border-bottom: 2px solid #007AFF; padding-bottom: 8px; }
+        h1 { border-bottom: 2px solid #FF454F; padding-bottom: 8px; }
         h2 { margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
         .badge {
             display: inline-block;
@@ -48,27 +48,33 @@
 </head>
 <body>
     <h1>HyperCapsule Privacy Policy</h1>
-    <p><strong>Effective Date:</strong> [EFFECTIVE_DATE: November 11, 2026]</p>
+    <p><strong>Effective Date:</strong> November 11, 2026</p>
+    <p><strong>Last Updated:</strong> November 11, 2026</p>
     <p><span class="badge">100% Offline &amp; Private</span></p>
 
     <div class="card">
-        <h3>Summary</h3>
-        <p><strong>HyperCapsule does NOT collect, store, or transmit your personal data.</strong> The app does not request Internet access permissions (<code>android.permission.INTERNET</code>). All notifications, alerts, and settings remain completely on your local device.</p>
+        <h3>Core Philosophy</h3>
+        <p><strong>HyperCapsule does NOT collect, store, or transmit your personal data.</strong> The app does not request or hold the Android Internet access permission (<code>android.permission.INTERNET</code>). All notification alerts, app preferences, and customizations remain strictly and exclusively on your local device.</p>
     </div>
 
-    <h2>1. Data Handling &amp; Permissions</h2>
+    <h2>1. Permissions &amp; Data Handling</h2>
     <ul>
-        <li><strong>Notification Access (NotificationListenerService):</strong> Used exclusively to convert incoming notifications (chats, calls, navigation, media, and downloads) into the pill-shaped HyperIsland interface. Notification contents are processed in memory and are discarded when dismissed.</li>
-        <li><strong>Query All Packages (QUERY_ALL_PACKAGES):</strong> Required so you can select which apps to bridge to the island and manage custom per-app rules. App lists and icons are cached locally only.</li>
-        <li><strong>Display Over Other Apps (SYSTEM_ALERT_WINDOW):</strong> Used solely to show the floating inline reply overlay window. Text entered is routed directly to the target app's remote input intent.</li>
-        <li><strong>Shizuku Privileged Access:</strong> An optional feature for Xiaomi Chinese ROMs to toggle system focus notification parameters locally without external communication.</li>
+        <li><strong>Notification Access (<code>NotificationListenerService</code>):</strong> Used exclusively to detect active notifications (messages, phone calls, navigation steps, media playback, and timers) and render them in the dynamic capsule overlay. Notification content is processed in volatile memory (RAM) and is cleared immediately upon dismissal. No notification text is written to storage or logged.</li>
+        <li><strong>Package Visibility (<code>QUERY_ALL_PACKAGES</code>):</strong> Allows you to discover installed applications on your device, choose which apps appear in the capsule, and configure per-app rules. App packages and names are cached locally on-device.</li>
+        <li><strong>Display Over Other Apps (<code>SYSTEM_ALERT_WINDOW</code>):</strong> Used solely to display the floating inline quick reply interface and interactive overlay windows without leaving your current app. Reply text is forwarded directly to the source app via Android's RemoteInput framework.</li>
+        <li><strong>Optional Shizuku Integration:</strong> An advanced local feature for Xiaomi Chinese HyperOS ROMs to toggle system focus notification parameters locally without any external communication.</li>
+        <li><strong>Boot Completed &amp; Wake Lock:</strong> Resumes background listener services cleanly following device restart.</li>
     </ul>
 
-    <h2>2. Storage &amp; Security</h2>
-    <p>All application preferences, keyword filters, and widget setups are stored inside your device's private sandbox storage using Android's Room SQLite database. No external databases, telemetry, crash reporters, or advertising networks are integrated into HyperCapsule.</p>
+    <h2>2. Storage &amp; Backup</h2>
+    <p>All application settings, toggle states, custom keyword blocklists, and widget configurations reside exclusively in Android's sandboxed private app storage using Room SQLite database and DataStore preferences. Manual backup export files (<code>.hbr</code>) are created only upon your explicit request and saved to a destination you select.</p>
 
-    <h2>3. Operator Information</h2>
+    <h2>3. Zero Third-Party Telemetry</h2>
+    <p>HyperCapsule contains no advertising networks, no analytics trackers (such as Google Analytics or Firebase), and no remote crash reporting SDKs. All operations are 100% local and offline.</p>
+
+    <h2>4. Operator &amp; Contact Information</h2>
     <p><strong>Project Operator / Maintainer:</strong> VaibhLabs<br>
-    <strong>Contact Email:</strong> riftarc.official@gmail.com</p>
+    <strong>Contact Email:</strong> <a href="mailto:riftarc.official@gmail.com">riftarc.official@gmail.com</a><br>
+    <strong>Project Repository:</strong> <a href="https://github.com/VaibhLabs/HyperCapsule">https://github.com/VaibhLabs/HyperCapsule</a></p>
 </body>
 </html>
