@@ -66,6 +66,7 @@ class NotificationReaderService : NotificationListenerService() {
 
     // --- CHANNELS ---
     private val NOTIFICATION_CHANNEL_ID = "hyper_bridge_notification_channel"
+    private val SILENT_NOTIFICATION_CHANNEL_ID = "hyper_bridge_silent_channel"
     private val WIDGET_CHANNEL_ID = "hyper_bridge_widget_channel"
     private val LIVE_UPDATE_CHANNEL_ID = "hyper_bridge_live_update_channel"
     private val WATCH_RELAY_CHANNEL_ID = "hyper_bridge_watch_relay_channel"
@@ -597,22 +598,35 @@ class NotificationReaderService : NotificationListenerService() {
     // =========================================================================
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    private fun isNativeIslandNotification(sbn: StatusBarNotification): Boolean {
+        if (sbn.packageName == packageName) return false
+        val extras = sbn.notification.extras ?: return false
+        if (extras.containsKey("miui.focus.param") || extras.containsKey("miui.system.focus.param")) {
+            return true
+        }
+        val template = extras.getString(Notification.EXTRA_TEMPLATE)
+        if (template == "androidx.media.app.NotificationCompat\$MediaStyle" ||
+            template == "android.app.Notification\$MediaStyle" ||
+            template == "android.app.Notification\$DecoratedMediaCustomViewStyle") {
+            return true
+        }
+        if (extras.containsKey(Notification.EXTRA_MEDIA_SESSION)) {
+            return true
+        }
+        val category = sbn.notification.category
+        if (category == Notification.CATEGORY_TRANSPORT) {
+            return true
+        }
+        if (category == Notification.CATEGORY_NAVIGATION && sbn.isOngoing) {
+            return true
+        }
+        return false
+    }
+
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         sbn?.let {
             if (it.packageName != packageName) {
-                val extras = it.notification.extras
-                var isNative = false
-                if (extras != null) {
-                    if (extras.containsKey("miui.focus.param") || extras.containsKey("miui.system.focus.param")) {
-                        isNative = true
-                    }
-                    val template = extras.getString(Notification.EXTRA_TEMPLATE)
-                    if (template == "androidx.media.app.NotificationCompat\$MediaStyle" ||
-                        template == "android.app.Notification\$MediaStyle") {
-                        isNative = true
-                    }
-                }
-                if (isNative) {
+                if (isNativeIslandNotification(it)) {
                     if (nativeIslands.add(it.key)) updatePermanentIsland()
                 } else {
                     if (nativeIslands.remove(it.key)) updatePermanentIsland()
@@ -697,6 +711,10 @@ class NotificationReaderService : NotificationListenerService() {
             var effectiveKey = key
             removalJobs[effectiveKey]?.cancel()
             removalJobs.remove(effectiveKey)
+            if (rawSbn.key != effectiveKey) {
+                removalJobs[rawSbn.key]?.cancel()
+                removalJobs.remove(rawSbn.key)
+            }
             var isUpdate = activeIslands.containsKey(effectiveKey)
             var bridgeId = sbn.key.hashCode()
 
@@ -774,10 +792,11 @@ class NotificationReaderService : NotificationListenerService() {
                 // [FIX] Fetch the user's custom layout so the Live Update can use it!
                 val navLayout = if (type == NotificationType.NAVIGATION) getEffectiveNav(sbn.packageName) else null
 
-                // [FIX] Pass the type and the right layout to the translator
+                // [FIX] Pass the type, appropriate channel, and the right layout to the translator
+                val targetChannelId = if (finalConfig.isShowShade == false) SILENT_NOTIFICATION_CHANNEL_ID else LIVE_UPDATE_CHANNEL_ID
                 val builder = liveUpdateTranslator.translateToLiveUpdate(
                     sbn = sbn,
-                    channelId = LIVE_UPDATE_CHANNEL_ID,
+                    channelId = targetChannelId,
                     type = type,
                     navRight = navLayout?.second,
                     config = finalConfig
@@ -860,16 +879,26 @@ class NotificationReaderService : NotificationListenerService() {
 
             kotlinx.coroutines.yield()
 
+            val isOngoingOrSpecial = sbn.isOngoing ||
+                type == NotificationType.CALL ||
+                type == NotificationType.NAVIGATION ||
+                type == NotificationType.MEDIA
+
             val removedTime = recentlyRemovedKeys[rawSbn.key]
             if (removedTime != null && System.currentTimeMillis() - removedTime < 2000) {
-                Log.d(TAG, "Skipping post because notification was recently removed: ${rawSbn.key}")
-                return
+                if (isOngoingOrSpecial) {
+                    Log.d(TAG, "Allowing ongoing/special notification repost despite recent removal: ${rawSbn.key}")
+                    recentlyRemovedKeys.remove(rawSbn.key)
+                } else {
+                    Log.d(TAG, "Skipping post because notification was recently removed: ${rawSbn.key}")
+                    return
+                }
             }
 
             val shouldAlertOnce = isUpdate && (type == NotificationType.PROGRESS || type == NotificationType.DOWNLOAD || type == NotificationType.MEDIA)
 
             Log.i(TAG, " POSTING Island -> ID: $bridgeId, Type: $type, FinalTitle: '$effectiveTitle', FinalText: '$effectiveText'")
-            postStandardNotification(sbn, bridgeId, data, shouldAlertOnce)
+            postStandardNotification(sbn, bridgeId, data, shouldAlertOnce, finalConfig.isShowShade)
 
             activeIslands[effectiveKey] = ActiveIsland(
                 id = bridgeId, type = type, postTime = System.currentTimeMillis(),
@@ -1028,14 +1057,27 @@ class NotificationReaderService : NotificationListenerService() {
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    private fun postStandardNotification(sbn: StatusBarNotification, bridgeId: Int, data: HyperIslandData, shouldAlertOnce: Boolean) {
-        val builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+    private fun postStandardNotification(
+        sbn: StatusBarNotification,
+        bridgeId: Int,
+        data: HyperIslandData,
+        shouldAlertOnce: Boolean,
+        isShowShade: Boolean? = true
+    ) {
+        val targetChannel = if (isShowShade == false) SILENT_NOTIFICATION_CHANNEL_ID else NOTIFICATION_CHANNEL_ID
+        val targetPriority = if (isShowShade == false) NotificationCompat.PRIORITY_MIN else NotificationCompat.PRIORITY_HIGH
+
+        val builder = NotificationCompat.Builder(this, targetChannel)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.notification_went_wrong))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(targetPriority)
             .setOngoing(true)
             .setOnlyAlertOnce(shouldAlertOnce)
+
+        if (isShowShade == false) {
+            builder.setSilent(true)
+        }
 
         val extras = Bundle()
         extras.putString(EXTRA_ORIGINAL_KEY, sbn.key)
@@ -1102,6 +1144,11 @@ class NotificationReaderService : NotificationListenerService() {
             setSound(null, null); enableVibration(false); setShowBadge(false)
         }
         manager.createNotificationChannel(notifChannel)
+
+        val silentChannel = NotificationChannel(SILENT_NOTIFICATION_CHANNEL_ID, "Silent Active Islands", NotificationManager.IMPORTANCE_MIN).apply {
+            setSound(null, null); enableVibration(false); setShowBadge(false)
+        }
+        manager.createNotificationChannel(silentChannel)
 
         val widgetChannel = NotificationChannel(WIDGET_CHANNEL_ID, "Widgets Overlay", NotificationManager.IMPORTANCE_LOW).apply {
             setSound(null, null); enableVibration(false); setShowBadge(false)
@@ -1278,19 +1325,7 @@ class NotificationReaderService : NotificationListenerService() {
                 var nativeChanged = false
                 for (sbn in currentNotifications) {
                     if (sbn.packageName != packageName) {
-                        val extras = sbn.notification.extras
-                        var isNative = false
-                        if (extras != null) {
-                            if (extras.containsKey("miui.focus.param") || extras.containsKey("miui.system.focus.param")) {
-                                isNative = true
-                            }
-                            val template = extras.getString(Notification.EXTRA_TEMPLATE)
-                            if (template == "androidx.media.app.NotificationCompat\$MediaStyle" ||
-                                template == "android.app.Notification\$MediaStyle") {
-                                isNative = true
-                            }
-                        }
-                        if (isNative) {
+                        if (isNativeIslandNotification(sbn)) {
                             if (nativeIslands.add(sbn.key)) nativeChanged = true
                         } else {
                             if (nativeIslands.remove(sbn.key)) nativeChanged = true
@@ -1349,13 +1384,22 @@ class NotificationReaderService : NotificationListenerService() {
                     if (id >= WIDGET_ID_BASE) continue
                     if (id in (WATCH_RELAY_ID_BASE - 0x0F)..WATCH_RELAY_ID_BASE) continue
                     if ((sbn.notification.flags and Notification.FLAG_GROUP_SUMMARY) != 0) continue
-                    if (reverseTranslations.containsKey(id)) continue
+                    if (reverseTranslations.containsKey(id) || activeTranslations.containsValue(id) || activeIslands.values.any { it.id == id }) continue
+                    val originalKeyExtra = sbn.notification.extras?.getString(EXTRA_ORIGINAL_KEY)
+                    if (originalKeyExtra != null && (activeIslands.containsKey(originalKeyExtra) || activeTranslations.containsKey(originalKeyExtra))) continue
                     if (System.currentTimeMillis() - sbn.postTime < 5000) continue
                     Log.d(TAG, "Sync: Reaping orphan bridge notification $id")
                     try {
                         NotificationManagerCompat.from(this@NotificationReaderService).cancel(id)
                     } catch (_: Exception) {}
                 }
+
+                // Reconcile activeWidgets with actual notifications posted
+                val currentWidgetIds = currentNotifications
+                    .filter { it.packageName == packageName && it.id >= WIDGET_ID_BASE }
+                    .map { it.id - WIDGET_ID_BASE }
+                    .toSet()
+                activeWidgets.retainAll(currentWidgetIds)
 
                 val islandPresent = currentNotifications.any {
                     it.packageName == packageName && it.id == PermanentIslandManager.PERMANENT_BRIDGE_ID

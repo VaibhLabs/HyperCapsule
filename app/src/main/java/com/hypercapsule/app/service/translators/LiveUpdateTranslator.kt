@@ -39,6 +39,11 @@ class LiveUpdateTranslator(
             .setOngoing(true)
             .setCategory(original?.category)
 
+        if (config?.isShowShade == false) {
+            builder.setPriority(NotificationCompat.PRIORITY_MIN)
+            builder.setSilent(true)
+        }
+
         original?.contentIntent?.let { builder.setContentIntent(it) }
 
         // --- THEME COLOR & ICON INJECTION ---

@@ -12,4 +12,7 @@ data class WidgetConfig(
     // Automation
     val autoUpdate: Boolean = false,
     val updateIntervalMinutes: Int = 15
-)
+) {
+    val timeoutMs: Int?
+        get() = if (timeout > 0) (timeout.toLong() * 1000L).coerceAtMost(86_400_000L).toInt() else null
+}

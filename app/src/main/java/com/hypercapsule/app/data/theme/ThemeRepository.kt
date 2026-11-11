@@ -276,7 +276,7 @@ class ThemeRepository(private val context: Context) {
                 java.util.zip.ZipOutputStream(java.io.FileOutputStream(zipFile)).use { zos ->
                     sourceFolder.walkTopDown().forEach { file ->
                         if (file.isFile) {
-                            val entryName = file.relativeTo(sourceFolder).path
+                            val entryName = file.relativeTo(sourceFolder).path.replace('\\', '/')
                             zos.putNextEntry(java.util.zip.ZipEntry(entryName))
                             file.inputStream().use { it.copyTo(zos) }
                             zos.closeEntry()

@@ -95,7 +95,11 @@ class DownloadTranslator(context: Context, repo: ThemeRepository) : BaseTranslat
                 right = ImageTextInfoRight(2, PicInfo(1, tickKey))
             )
             builder.setSmallIsland(tickKey)
-            builder.setIslandConfig(timeout = config.timeout , dismissible = true, expandedTimeMs = if (isFloatEnabled) config.floatTimeout else null)
+            builder.setIslandConfig(
+                timeout = config.timeoutMs,
+                dismissible = true,
+                expandedTimeMs = if (isFloatEnabled) config.floatTimeoutMs else null
+            )
         } else {
             if (isIndeterminate) {
                 builder.setBigIslandInfo(

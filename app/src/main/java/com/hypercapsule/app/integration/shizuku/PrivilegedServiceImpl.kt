@@ -18,7 +18,7 @@ class PrivilegedServiceImpl : IPrivilegedService.Stub() {
 
     companion object {
         private const val TAG = "PrivilegedServiceImpl"
-        private const val OP_TIMEOUT_MS = 3000L
+        private const val OP_TIMEOUT_MS = 500L
         private val workerThread: HandlerThread by lazy {
             HandlerThread("PrivilegedServiceWorker").apply { start() }
         }
@@ -47,6 +47,11 @@ class PrivilegedServiceImpl : IPrivilegedService.Stub() {
     override fun setPackageNetworkingEnabled(uid: Int, enabled: Boolean): Boolean {
         logD("🚀 ENTRY: setPackageNetworkingEnabled(uid=$uid, enabled=$enabled)")
         
+        if (android.os.Build.VERSION.SDK_INT >= 35) {
+            logW("Skipping setPackageNetworkingEnabled: not supported on Android 15+ (API ${android.os.Build.VERSION.SDK_INT})")
+            return false
+        }
+
         try {
             val resultRef = AtomicReference<Result<Boolean>?>(null)
             val latch = CountDownLatch(1)

@@ -105,7 +105,7 @@ class WidgetTranslator(context: Context) : BaseTranslator(context) {
             builder.addPicture(getTransparentPicture("default_icon"))
         }
 
-        builder.setIslandConfig(timeout = config.timeout , dismissible = false)
+        builder.setIslandConfig(timeout = config.timeoutMs, dismissible = false)
         builder.setEnableFloat(false)
         builder.setShowNotification(config.isShowShade)
         builder.setIslandFirstFloat(false)

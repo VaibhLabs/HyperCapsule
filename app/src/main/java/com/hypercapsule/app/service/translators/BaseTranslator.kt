@@ -46,6 +46,11 @@ abstract class BaseTranslator(
     protected val repository: ThemeRepository? = null
 ) {
 
+    companion object {
+        private val sharedTransparentBitmap by lazy { Bitmap.createBitmap(96, 96, Bitmap.Config.ARGB_8888) }
+        private val sharedFallbackBitmap by lazy { Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) }
+    }
+
     enum class ActionDisplayMode { TEXT, ICON, BOTH }
 
     private val appColorCache = ConcurrentHashMap<String, String>()
@@ -400,9 +405,7 @@ abstract class BaseTranslator(
     // --- UTILS ---
 
     protected fun getTransparentPicture(key: String): HyperPicture {
-        val conf = Bitmap.Config.ARGB_8888
-        val transparentBitmap = createBitmap(96, 96, conf)
-        return HyperPicture(key, transparentBitmap)
+        return HyperPicture(key, sharedTransparentBitmap)
     }
 
     protected fun getColoredPicture(key: String, resId: Int, colorHex: String): HyperPicture {
@@ -547,7 +550,7 @@ abstract class BaseTranslator(
         return null
     }
 
-    protected fun createFallbackBitmap(): Bitmap = createBitmap(1, 1)
+    protected fun createFallbackBitmap(): Bitmap = sharedFallbackBitmap
 
     protected fun Drawable.toBitmap(width: Int? = null, height: Int? = null): Bitmap {
         if (this is BitmapDrawable && this.bitmap != null) {

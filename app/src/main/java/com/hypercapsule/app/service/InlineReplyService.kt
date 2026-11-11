@@ -3,7 +3,10 @@
 import android.app.PendingIntent
 import android.app.RemoteInput
 import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Outline
 import android.graphics.PixelFormat
 import android.os.Build
@@ -12,8 +15,16 @@ import android.os.IBinder
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.ViewOutlineProvider
 import android.view.WindowManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,6 +38,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -91,6 +103,16 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
 
     private var windowManager: WindowManager? = null
     private var composeView: ComposeView? = null
+    private var watchdogJob: Job? = null
+    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    private val screenOffReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                removeOverlayAndStop()
+            }
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -101,6 +123,9 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        try {
+            registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
+        } catch (_: Exception) {}
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -119,6 +144,12 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
 
     private fun showOverlay(pendingIntent: PendingIntent, resultKey: String, packageName: String) {
         if (composeView != null) return
+
+        watchdogJob?.cancel()
+        watchdogJob = serviceScope.launch {
+            delay(60_000L)
+            removeOverlayAndStop()
+        }
 
         composeView = ComposeView(this).apply {
             setViewTreeLifecycleOwner(this@InlineReplyService)
@@ -166,14 +197,8 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
 
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Transparent)
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null
-                            ) {
-                                removeOverlayAndStop()
-                            },
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
                         contentAlignment = Alignment.BottomCenter
                     ) {
                         Row(
@@ -325,20 +350,29 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
                     false
                 }
             }
+
+            setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_OUTSIDE) {
+                    removeOverlayAndStop()
+                    true
+                } else {
+                    false
+                }
+            }
         }
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
             WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT
         ).apply {
-            gravity = Gravity.CENTER
-            // We do NOT use FLAG_NOT_FOCUSABLE because we need the keyboard to open!
-            // But we must be careful to consume back presses to allow the user to exit.
+            gravity = Gravity.BOTTOM
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
         }
 
         try {
@@ -369,6 +403,7 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
     }
 
     private fun removeOverlayAndStop() {
+        watchdogJob?.cancel()
         try {
             composeView?.let { windowManager?.removeView(it) }
         } catch (e: Exception) {
@@ -380,6 +415,11 @@ class InlineReplyService : Service(), LifecycleOwner, ViewModelStoreOwner, Saved
 
     override fun onDestroy() {
         super.onDestroy()
+        try {
+            unregisterReceiver(screenOffReceiver)
+        } catch (_: Exception) {}
+        watchdogJob?.cancel()
+        serviceScope.cancel()
         removeOverlayAndStop()
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)

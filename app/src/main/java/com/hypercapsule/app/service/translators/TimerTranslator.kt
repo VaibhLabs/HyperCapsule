@@ -37,7 +37,7 @@ class TimerTranslator(context: Context, repo: ThemeRepository) : BaseTranslator(
 
         val builder = HyperIslandNotification.Builder(context, "bridge_${sbn.packageName}", title)
         builder.setEnableFloat(config.isFloat ?: false)
-        builder.setIslandConfig(timeout = config.timeout)
+        builder.setIslandConfig(timeout = config.timeoutMs)
         builder.setShowNotification(config.isShowShade ?: true)
         builder.setIslandFirstFloat(config.isFloat ?: false)
 
@@ -69,7 +69,7 @@ class TimerTranslator(context: Context, repo: ThemeRepository) : BaseTranslator(
             builder.addAction(it.action)
             it.actionImage?.let { pic -> builder.addPicture(pic) }
         }
-        builder.setIslandConfig(highlightColor = theme?.global?.highlightColor, expandedTimeMs = config.floatTimeout)
+        builder.setIslandConfig(highlightColor = theme?.global?.highlightColor, expandedTimeMs = config.floatTimeoutMs)
 
         return HyperIslandData(builder.buildResourceBundle(), builder.buildJsonParam())
     }

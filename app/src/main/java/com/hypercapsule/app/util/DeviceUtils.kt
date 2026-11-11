@@ -1,5 +1,6 @@
 ﻿package com.hypercapsule.app.util
 
+import android.content.Context
 import android.os.Build
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -10,6 +11,11 @@ object DeviceUtils {
         get() = Build.MANUFACTURER.equals("Xiaomi", ignoreCase = true) ||
                 Build.MANUFACTURER.equals("Poco", ignoreCase = true) ||
                 Build.MANUFACTURER.equals("Redmi", ignoreCase = true)
+
+    fun isTablet(context: Context): Boolean {
+        val configuration = context.resources.configuration
+        return configuration.smallestScreenWidthDp >= 600
+    }
 
     fun getHyperOSVersion(): String {
         val version = getSystemProperty("ro.mi.os.version.name")

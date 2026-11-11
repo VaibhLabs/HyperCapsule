@@ -91,14 +91,16 @@ object ShizukuManager {
 
     private var restoreNetworkJob: Job? = null
     private val notifyMutex = Mutex()
+    private val managerScope = CoroutineScope(Dispatchers.IO + kotlinx.coroutines.SupervisorJob())
 
     @androidx.annotation.RequiresPermission(android.Manifest.permission.POST_NOTIFICATIONS)
     fun notify(context: Context, id: Int, notification: Notification) {
-        CoroutineScope(Dispatchers.IO).launch {
+        managerScope.launch {
             val prefs = AppPreferences(context)
             val workaroundEnabled = prefs.isShizukuWorkaroundEnabled.first()
+            val isCn = DeviceUtils.isCNRom
             
-            if (_isPermissionGranted.value && workaroundEnabled) {
+            if (_isPermissionGranted.value && workaroundEnabled && isCn) {
                 notifyMutex.withLock  {
                     // Cancel any pending restore job so we don't enable the network too early 
                     // if another notification comes in before the 1 second delay is up.
@@ -120,18 +122,19 @@ object ShizukuManager {
                     }
                 }
             } else {
-                // Fallback to standard NotificationManagerCompat
+                // Fallback to standard NotificationManagerCompat (Global ROMs or disabled workaround)
                 NotificationManagerCompat.from(context).notify(id, notification)
             }
         }
     }
 
     fun cancel(context: Context, id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        managerScope.launch {
             val prefs = AppPreferences(context)
             val workaroundEnabled = prefs.isShizukuWorkaroundEnabled.first()
+            val isCn = DeviceUtils.isCNRom
             
-            if (_isPermissionGranted.value && workaroundEnabled) {
+            if (_isPermissionGranted.value && workaroundEnabled && isCn) {
                 notifyMutex.withLock {
                     restoreNetworkJob?.cancel()
                     XmsfNetworkHelper.setXmsfNetworkingEnabled(context, false)
@@ -150,11 +153,12 @@ object ShizukuManager {
 
     @androidx.annotation.RequiresPermission(android.Manifest.permission.POST_NOTIFICATIONS)
     fun notifyWithCancel(context: Context, id: Int, notification: Notification) {
-        CoroutineScope(Dispatchers.IO).launch {
+        managerScope.launch {
             val prefs = AppPreferences(context)
             val workaroundEnabled = prefs.isShizukuWorkaroundEnabled.first()
+            val isCn = DeviceUtils.isCNRom
             
-            if (_isPermissionGranted.value && workaroundEnabled) {
+            if (_isPermissionGranted.value && workaroundEnabled && isCn) {
                 notifyMutex.withLock {
                     restoreNetworkJob?.cancel()
                     XmsfNetworkHelper.setXmsfNetworkingEnabled(context, false)

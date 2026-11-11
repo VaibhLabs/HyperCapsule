@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import com.hypercapsule.app.R
 import com.hypercapsule.app.data.AppPreferences
 import com.hypercapsule.app.models.HyperIslandData
+import com.hypercapsule.app.util.DeviceUtils
 import com.hypercapsule.app.util.ShizukuManager
 import io.github.d4viddf.hyperisland_kit.HyperIslandNotification
 import io.github.d4viddf.hyperisland_kit.models.ImageTextInfoLeft
@@ -103,7 +104,11 @@ class PermanentIslandManager(
     // when a bridged island collapses or expires (removing it would leave a gap until the TTL).
     private fun desiredActive(): Boolean {
         val isLandscape = context.resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-        return isPermanentIslandEnabled && !hasNativeIsland && !(isHideInLandscapeEnabled && isLandscape)
+        val isTablet = DeviceUtils.isTablet(context)
+        // If hide in landscape is enabled, only suppress on phones in landscape (not tablets where landscape is standard operating orientation)
+        val landscapeSuppressed = isHideInLandscapeEnabled && isLandscape && !isTablet
+        // Prevent the Permanent Island from showing when a native island is active or when bridged active notifications exist
+        return isPermanentIslandEnabled && !hasNativeIsland && currentRealNotifications == 0 && !landscapeSuppressed
     }
 
     @Synchronized

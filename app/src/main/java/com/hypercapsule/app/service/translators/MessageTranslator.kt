@@ -48,7 +48,12 @@ class MessageTranslator(
 
         // --- CONFIGURATION ---
         builder.setEnableFloat(config.isFloat ?: false)
-        builder.setIslandConfig(timeout = config.timeout , dismissible = true, highlightColor = highlightColor, expandedTimeMs = config.floatTimeout)
+        builder.setIslandConfig(
+            timeout = config.timeoutMs,
+            dismissible = true,
+            highlightColor = highlightColor,
+            expandedTimeMs = config.floatTimeoutMs
+        )
         builder.setShowNotification(config.isShowShade ?: false)
         builder.setReopen(true)
         builder.setIslandFirstFloat(config.isFloat ?: false)

@@ -60,18 +60,13 @@ class BootReceiver : BroadcastReceiver() {
                 // 3. Re-bind Logic
                 withContext(Dispatchers.Main) {
                     try {
-                        if (isMajor) {
-                            val now = System.currentTimeMillis()
-                            if (now - lastToggleTime > 5000) {
-                                lastToggleTime = now
-                                Log.d("HyperBridge", "Major trigger: Toggling NLS component state.")
-                                toggleNotificationListener(context)
-                            } else {
-                                Log.d("HyperBridge", "Major trigger: Cooldown active, skipping toggle.")
-                            }
-                        } else if (isMinor) {
-                            Log.d("HyperBridge", "Minor trigger: Requesting official re-bind.")
+                        val now = System.currentTimeMillis()
+                        if (now - lastToggleTime > 5000) {
+                            lastToggleTime = now
+                            Log.d("HyperCapsule", "Trigger: Requesting official notification listener re-bind.")
                             requestRebind(context)
+                        } else {
+                            Log.d("HyperCapsule", "Trigger: Cooldown active, skipping re-bind request.")
                         }
                     } finally {
                         pendingResult.finish()
@@ -86,26 +81,7 @@ class BootReceiver : BroadcastReceiver() {
             val component = ComponentName(context, NotificationReaderService::class.java)
             NotificationListenerService.requestRebind(component)
         } catch (e: Exception) {
-            Log.e("HyperBridge", "Failed to request official re-bind", e)
+            Log.e("HyperCapsule", "Failed to request official re-bind", e)
         }
-    }
-
-    private fun toggleNotificationListener(context: Context) {
-        val pm = context.packageManager
-        val componentName = ComponentName(context, NotificationReaderService::class.java)
-
-        // Disable
-        pm.setComponentEnabledSetting(
-            componentName,
-            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            PackageManager.DONT_KILL_APP
-        )
-
-        // Enable
-        pm.setComponentEnabledSetting(
-            componentName,
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
     }
 }
