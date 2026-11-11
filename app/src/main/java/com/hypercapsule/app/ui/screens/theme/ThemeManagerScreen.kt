@@ -298,6 +298,8 @@ fun ThemeCard(
     val spacing = LocalHyperCapsuleSpacing.current
     val typography = LocalHyperCapsuleTypography.current
 
+    val themeHighlightColor = parseColor(theme.global.highlightColor)
+
     HyperCapsuleGlassCard(
         onClick = onClick,
         shape = shapes.large,
@@ -310,22 +312,54 @@ fun ThemeCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                if (customIcon != null) {
-                    Image(
-                        bitmap = customIcon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(42.dp)
-                            .clip(shapes.medium),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .size(42.dp)
-                            .clip(shapes.medium)
-                            .background(parseColor(theme.global.highlightColor))
-                    )
+                // Mini Island Mockup Preview
+                Box(
+                    modifier = Modifier
+                        .height(36.dp)
+                        .clip(shapes.pill)
+                        .background(Color(0xFF0A0D15))
+                        .border(1.dp, themeHighlightColor.copy(alpha = 0.5f), shapes.pill)
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        if (customIcon != null) {
+                            Image(
+                                bitmap = customIcon,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(18.dp)
+                                    .clip(CircleShape)
+                                    .background(themeHighlightColor.copy(alpha = 0.25f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Brush,
+                                    contentDescription = null,
+                                    tint = themeHighlightColor,
+                                    modifier = Modifier.size(10.dp)
+                                )
+                            }
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .width(28.dp)
+                                .height(4.dp)
+                                .clip(shapes.pill)
+                                .background(themeHighlightColor)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -433,18 +467,39 @@ fun SystemDefaultCard(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(42.dp)
-                        .clip(shapes.medium)
-                        .background(colors.surfaceElevatedGlass)
-                        .border(1.dp, colors.borderHighlight, shapes.medium),
+                        .height(36.dp)
+                        .clip(shapes.pill)
+                        .background(Color(0xFF0A0D15))
+                        .border(1.dp, colors.borderHighlight, shapes.pill)
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Rounded.PhoneAndroid,
-                        contentDescription = null,
-                        tint = colors.primary,
-                        modifier = Modifier.size(22.dp)
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clip(CircleShape)
+                                .background(colors.primary.copy(alpha = 0.2f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.PhoneAndroid,
+                                contentDescription = null,
+                                tint = colors.primary,
+                                modifier = Modifier.size(10.dp)
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .width(28.dp)
+                                .height(4.dp)
+                                .clip(shapes.pill)
+                                .background(colors.textSecondary)
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 if (isActive) {

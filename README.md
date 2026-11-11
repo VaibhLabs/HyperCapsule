@@ -9,7 +9,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.5.7-blue?style=for-the-badge" alt="Version 0.5.7" />
+  <img src="https://img.shields.io/badge/version-1.00%20Stable-00C7FF?style=for-the-badge" alt="Version 1.00 Stable" />
+  <img src="https://img.shields.io/badge/developer-VaibhLabs-8A4FFF?style=for-the-badge" alt="Developer VaibhLabs" />
   <img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" />
   <img src="https://img.shields.io/badge/HyperOS-Compatible-black?style=for-the-badge" alt="HyperOS" />

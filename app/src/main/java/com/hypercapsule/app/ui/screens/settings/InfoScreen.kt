@@ -61,6 +61,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.LocaleListCompat
 import com.hypercapsule.app.R
@@ -251,16 +252,16 @@ fun InfoScreen(
                                 title = stringResource(R.string.developer),
                                 subtitle = stringResource(R.string.developer_subtitle),
                                 icon = Icons.Default.Person,
-                                showChevron = true,
-                                onClick = { }
-                            )
-                            HorizontalDivider(color = colors.borderSubtle)
-                            HyperCapsuleSettingsRow(
-                                title = stringResource(R.string.version_history),
-                                subtitle = "0.1.0 - $appVersion",
-                                icon = Icons.Default.History,
-                                showChevron = true,
-                                onClick = onHistoryClick
+                                showChevron = false,
+                                onClick = {
+                                    try {
+                                        val intent = android.content.Intent(
+                                            android.content.Intent.ACTION_VIEW,
+                                            "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                                        )
+                                        context.startActivity(intent)
+                                    } catch (_: Exception) {}
+                                }
                             )
                             HorizontalDivider(color = colors.borderSubtle)
                             HyperCapsuleSettingsRow(
@@ -272,27 +273,25 @@ fun InfoScreen(
                             )
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(spacing.large))
+                    Spacer(modifier = Modifier.height(spacing.medium))
 
-                // SPECIAL THANKS GROUP
-                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = spacing.default)) {
-                    HyperCapsuleSectionHeader(title = stringResource(R.string.special_thanks))
-
-                    HyperCapsuleGlassCard(
-                        contentPadding = 0.dp,
+                    // Website-Style Button: Visit VaibhLabs.com
+                    HyperCapsuleActionButton(
+                        text = stringResource(R.string.visit_vaibhlabs),
+                        icon = Icons.Default.Language,
+                        onClick = {
+                            try {
+                                val intent = android.content.Intent(
+                                    android.content.Intent.ACTION_VIEW,
+                                    "https://github.com/VaibhLabs/HyperCapsule".toUri()
+                                )
+                                context.startActivity(intent)
+                            } catch (_: Exception) {}
+                        },
+                        isPrimary = false,
                         modifier = Modifier.fillMaxWidth()
-                    ) {
-                        HyperCapsuleSettingsRow(
-                            title = stringResource(R.string.xmsf_workaround_credit_title),
-                            subtitle = stringResource(R.string.xmsf_workaround_credit_subtitle),
-                            icon = Icons.Default.Favorite,
-                            iconTint = colors.error,
-                            showChevron = true,
-                            onClick = { uriHandler.openUri("https://www.coolapk1s.com/feed/70418983") }
-                        )
-                    }
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(spacing.huge))

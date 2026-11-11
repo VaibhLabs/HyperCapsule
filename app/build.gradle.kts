@@ -15,8 +15,8 @@ android {
         applicationId = "com.hypercapsule.app"
         minSdk = 35
         targetSdk = 37
-        versionCode = 33
-        versionName = "0.5.7"
+        versionCode = 34
+        versionName = "1.00 Stable"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

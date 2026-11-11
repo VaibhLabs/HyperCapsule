@@ -1,7 +1,9 @@
 package com.hypercapsule.app.ui.designsystem.components
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -65,16 +67,37 @@ fun HyperCapsuleSwitch(
 
     val trackColor by animateColorAsState(
         targetValue = when {
-            !enabled -> colors.surfaceElevated
+            !enabled -> colors.surfaceElevated.copy(alpha = 0.5f)
             checked -> colors.primary
             else -> colors.surfaceElevated
         },
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "switchTrackColor"
+    )
+
+    val borderColor by animateColorAsState(
+        targetValue = when {
+            !enabled -> colors.borderSubtle
+            checked -> colors.primary.copy(alpha = 0.6f)
+            else -> colors.borderHighlight
+        },
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "switchBorderColor"
     )
 
     val thumbOffset by animateDpAsState(
         targetValue = if (checked) 22.dp else 2.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMediumLow
+        ),
         label = "switchThumbOffset"
+    )
+
+    val thumbColor by animateColorAsState(
+        targetValue = if (checked) Color.White else Color(0xFFE4E7EE),
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "switchThumbColor"
     )
 
     Box(
@@ -82,7 +105,7 @@ fun HyperCapsuleSwitch(
             .size(width = 48.dp, height = 28.dp)
             .clip(CircleShape)
             .background(trackColor)
-            .border(1.dp, colors.borderHighlight, CircleShape)
+            .border(1.dp, borderColor, CircleShape)
             .clickable(
                 enabled = enabled,
                 interactionSource = remember { MutableInteractionSource() },
@@ -98,7 +121,7 @@ fun HyperCapsuleSwitch(
                 .offset(x = thumbOffset)
                 .size(24.dp)
                 .clip(CircleShape)
-                .background(Color.White)
+                .background(thumbColor)
         )
     }
 }

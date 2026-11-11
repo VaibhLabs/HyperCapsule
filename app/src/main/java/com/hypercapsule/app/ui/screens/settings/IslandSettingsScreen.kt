@@ -20,7 +20,7 @@ import com.hypercapsule.app.models.IslandConfig
 import com.hypercapsule.app.ui.components.IslandSettingsControl
 import com.hypercapsule.app.ui.designsystem.components.HyperCapsuleScaffold
 import com.hypercapsule.app.ui.designsystem.components.HyperCapsuleTopBar
-import com.hypercapsule.app.ui.designsystem.theme.LocalHyperCapsuleSpacing
+import com.hypercapsule.app.ui.designsystem.spacing.LocalHyperCapsuleSpacing
 import com.hypercapsule.app.ui.theme.HyperCapsuleTheme
 import kotlinx.coroutines.launch
 
@@ -58,8 +58,8 @@ fun IslandSettingsContent(
     HyperCapsuleScaffold(
         topBar = {
             HyperCapsuleTopBar(
-                title = stringResource(R.string.global_settings),
-                onBack = onBack
+                title = stringResource(R.string.island_behavior),
+                onBackClick = onBack
             )
         }
     ) { padding ->
@@ -68,7 +68,7 @@ fun IslandSettingsContent(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = spacing.screenPadding, vertical = spacing.itemSpacing)
+                .padding(horizontal = spacing.default, vertical = spacing.medium)
         ) {
             IslandSettingsControl(
                 config = globalConfig,

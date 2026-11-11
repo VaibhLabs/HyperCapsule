@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.ui.NavDisplay
 import com.hypercapsule.app.data.AppPreferences
 import com.hypercapsule.app.data.db.AppDatabase
-import com.hypercapsule.app.ui.components.ChangelogSheet
+import com.hypercapsule.app.ui.components.VersionWelcomeDialog
 import com.hypercapsule.app.ui.navigation.Navigator
 import com.hypercapsule.app.ui.navigation.Screen
 import com.hypercapsule.app.ui.navigation.mainNavGraph
@@ -210,10 +210,9 @@ private fun MainNavigationContent(
     )
 
     if (showChangelog) {
-        ChangelogSheet(
-            currentVersionName = currentVersionName,
-            changelogText = stringResource(R.string.changelog_0_5_7),
-            onDismiss = {
+        VersionWelcomeDialog(
+            versionName = currentVersionName,
+            onContinue = {
                 showChangelog = false
                 scope.launch {
                     preferences.setLastSeenVersion(currentVersionCode)

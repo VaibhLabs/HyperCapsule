@@ -49,7 +49,8 @@
     <string name="no_apps_found">No apps found</string>
 
     <string name="version_template">Version %s</string>
-    <string name="developer_credit">HyperCapsule Project</string>
+    <string name="developer_credit">Developed by VaibhLabs</string>
+    <string name="visit_vaibhlabs">Visit VaibhLabs.com</string>
 
     <string name="group_configuration">Configuration</string>
     <string name="system_setup">System Setup</string>
@@ -66,8 +67,8 @@
     <string name="special_thanks">Special Thanks</string>
     <string name="xmsf_workaround_credit_title">XMSF Workaround</string>
     <string name="xmsf_workaround_credit_subtitle">Research by Stardawn (星间晞)</string>
-    <string name="developer">Developer</string>
-    <string name="developer_subtitle">HyperOS Dynamic Island Utility</string>
+    <string name="developer">VaibhLabs</string>
+    <string name="developer_subtitle">Developed by VaibhLabs</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_subtitle">HyperCapsule Open Source</string>
     <string name="licenses">Open Source Licenses</string>

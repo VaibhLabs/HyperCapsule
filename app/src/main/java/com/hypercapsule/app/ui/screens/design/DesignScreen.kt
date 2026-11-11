@@ -3,6 +3,9 @@
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,21 +16,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.Settings
@@ -38,9 +45,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.carousel.HorizontalCenteredHeroCarousel
-import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
-import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,20 +66,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.toColorInt
 import com.hypercapsule.app.R
 import com.hypercapsule.app.data.AppPreferences
 import com.hypercapsule.app.data.theme.ThemeRepository
 import com.hypercapsule.app.data.widget.WidgetManager
-import com.hypercapsule.app.models.theme.CallModule
-import com.hypercapsule.app.models.theme.GlobalConfig
 import com.hypercapsule.app.models.theme.HyperTheme
 import com.hypercapsule.app.models.theme.ResourceType
-import com.hypercapsule.app.models.theme.ThemeMetadata
 import com.hypercapsule.app.ui.designsystem.color.LocalHyperCapsuleColors
 import com.hypercapsule.app.ui.designsystem.components.HyperCapsuleActionButton
 import com.hypercapsule.app.ui.designsystem.components.HyperCapsuleGlassCard
@@ -89,7 +89,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-// --- 1. STATEFUL COMPOSABLE (Logic Layer) ---
+/**
+ * 1. STATEFUL COMPOSABLE (Logic Layer)
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DesignScreen(
@@ -227,8 +229,11 @@ fun DesignScreen(
     }
 }
 
-// --- 2. STATELESS COMPOSABLE (UI Layer) ---
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * 2. STATELESS COMPOSABLE (UI Layer)
+ * Fixed root layout with zero horizontal overflow, no experimental mask clipping,
+ * and stable fluid scrolling.
+ */
 @Composable
 fun DesignScreenContent(
     activeThemeId: String?,
@@ -280,17 +285,19 @@ fun DesignScreenContent(
 
             Spacer(modifier = Modifier.height(spacing.small))
 
-            HeroSection()
+            // Robust, Edge-to-Edge Hero Pager (Replaces experimental carousel)
+            StableHeroSection()
 
             Spacer(modifier = Modifier.height(spacing.large))
 
+            // Themes Section
             Column(modifier = Modifier.fillMaxWidth()) {
                 HyperCapsuleSectionHeader(
                     title = stringResource(R.string.design_section_themes),
                     actionText = stringResource(R.string.see_all_action),
                     onActionClick = onNavigateToThemes
                 )
-                ThemesCarousel(
+                StableThemesRow(
                     themes = availableThemes,
                     themeIcons = themeIcons,
                     activeId = activeThemeId,
@@ -301,13 +308,14 @@ fun DesignScreenContent(
 
             Spacer(modifier = Modifier.height(spacing.large))
 
+            // Widgets Section
             Column(modifier = Modifier.fillMaxWidth()) {
                 HyperCapsuleSectionHeader(
                     title = stringResource(R.string.design_section_widgets),
                     actionText = stringResource(R.string.see_all_action),
                     onActionClick = onNavigateToWidgets
                 )
-                WidgetsCarousel(
+                StableWidgetsRow(
                     savedCount = savedWidgetCount,
                     icons = widgetIcons,
                     onNavigateToWidgets = onNavigateToWidgets,
@@ -334,27 +342,72 @@ fun DesignScreenContent(
 
 // --- SECTIONS ---
 
-data class HeroItem(val title: String, val subtitle: String, val color: Color, val onClick: () -> Unit)
+data class HeroItem(
+    val title: String,
+    val subtitle: String,
+    val badge: String,
+    val color: Color,
+    val onClick: () -> Unit
+)
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Stable Hero Pager using standard HorizontalPager with zero clip escapes or side black bars.
+ */
 @Composable
-fun HeroSection() {
+fun StableHeroSection() {
     val items = listOf(
-        HeroItem(stringResource(R.string.design_hero_customization_title), stringResource(R.string.design_hero_customization_subtitle), Color(0xFF00C7FF)) {},
-        HeroItem(stringResource(R.string.design_hero_pro_title), stringResource(R.string.design_hero_pro_subtitle), Color(0xFF0A84FF)) {},
-        HeroItem(stringResource(R.string.design_hero_community_title), stringResource(R.string.design_hero_community_subtitle), Color(0xFF9D4EDD)) {}
+        HeroItem(
+            stringResource(R.string.design_hero_customization_title),
+            stringResource(R.string.design_hero_customization_subtitle),
+            "CUSTOMIZATION",
+            Color(0xFF00C7FF)
+        ) {},
+        HeroItem(
+            stringResource(R.string.design_hero_pro_title),
+            stringResource(R.string.design_hero_pro_subtitle),
+            "STUDIO PRO",
+            Color(0xFF0A84FF)
+        ) {},
+        HeroItem(
+            stringResource(R.string.design_hero_community_title),
+            stringResource(R.string.design_hero_community_subtitle),
+            "COMMUNITY",
+            Color(0xFF9D4EDD)
+        ) {}
     )
 
-    val state = rememberCarouselState { items.size }
+    val pagerState = rememberPagerState(pageCount = { items.size })
+    val colors = LocalHyperCapsuleColors.current
 
-    HorizontalCenteredHeroCarousel(
-        modifier = Modifier.fillMaxWidth(),
-        state = state,
-        itemSpacing = 12.dp,
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    ) { i ->
-        val item = items[i]
-        HeroCard(item = item)
+    Column(modifier = Modifier.fillMaxWidth()) {
+        HorizontalPager(
+            state = pagerState,
+            pageSpacing = 12.dp,
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) { page ->
+            HeroCard(item = items[page])
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Pager indicator dots
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            repeat(items.size) { iteration ->
+                val isSelected = pagerState.currentPage == iteration
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 3.dp)
+                        .size(if (isSelected) 16.dp else 6.dp, 6.dp)
+                        .clip(CircleShape)
+                        .background(if (isSelected) colors.primary else colors.borderHighlight)
+                )
+            }
+        }
     }
 }
 
@@ -367,7 +420,7 @@ fun HeroCard(item: HeroItem, modifier: Modifier = Modifier) {
 
     HyperCapsuleGlassCard(
         modifier = modifier
-            .height(180.dp)
+            .height(175.dp)
             .fillMaxWidth(),
         shape = shapes.extraLarge,
         borderColor = item.color.copy(alpha = 0.35f),
@@ -375,26 +428,28 @@ fun HeroCard(item: HeroItem, modifier: Modifier = Modifier) {
         onClick = item.onClick
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
+            // Subtle ambient gradient background (not blinding neon)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.linearGradient(
                             listOf(
-                                item.color.copy(alpha = 0.15f),
+                                item.color.copy(alpha = 0.12f),
                                 Color.Transparent
                             )
                         )
                     )
             )
 
+            // Geometric subtle circle accent
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .offset(x = 24.dp, y = 24.dp)
+                    .offset(x = 20.dp, y = 20.dp)
                     .size(110.dp)
                     .clip(CircleShape)
-                    .background(item.color.copy(alpha = 0.12f))
+                    .background(item.color.copy(alpha = 0.08f))
             )
 
             Column(
@@ -402,13 +457,28 @@ fun HeroCard(item: HeroItem, modifier: Modifier = Modifier) {
                     .align(Alignment.BottomStart)
                     .padding(spacing.default)
             ) {
+                Box(
+                    modifier = Modifier
+                        .clip(shapes.pill)
+                        .background(item.color.copy(alpha = 0.15f))
+                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                ) {
+                    Text(
+                        text = item.badge,
+                        style = typography.labelSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = item.color,
+                        letterSpacing = 0.5.sp
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = item.title,
                     style = typography.titleLarge,
                     color = colors.textPrimary,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     text = item.subtitle,
                     style = typography.bodySmall,
@@ -419,40 +489,28 @@ fun HeroCard(item: HeroItem, modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Stable, high-performance Themes Row with smooth snapping and zero horizontal black bars.
+ */
 @Composable
-fun ThemesCarousel(
+fun StableThemesRow(
     themes: List<HyperTheme>,
     themeIcons: Map<String, ImageBitmap?>,
     activeId: String?,
     onNavigateToThemes: () -> Unit,
     onEditTheme: (String) -> Unit
 ) {
-    val displayThemes = themes.take(5)
-    val totalCount = 1 + displayThemes.size + 1
-    val state = rememberCarouselState { totalCount }
+    val displayThemes = themes.take(6)
+    val listState = rememberLazyListState()
 
-    HorizontalMultiBrowseCarousel(
-        modifier = Modifier.fillMaxWidth(),
-        state = state,
-        preferredItemWidth = 160.dp,
-        itemSpacing = 12.dp,
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    ) { i ->
-        val isSystemDefault = i == 0
-        val isAction = i > displayThemes.size
-
-        if (isAction) {
-            ThemePreviewCard(
-                title = stringResource(R.string.design_browse_more),
-                subtitle = "",
-                color = LocalHyperCapsuleColors.current.primary,
-                isActive = false,
-                icon = Icons.Rounded.Add,
-                isAction = true,
-                onClick = onNavigateToThemes
-            )
-        } else if (isSystemDefault) {
+    LazyRow(
+        state = listState,
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        // 1. System Default Theme Card
+        item(key = "theme_system_default") {
             ThemePreviewCard(
                 title = stringResource(R.string.theme_system_default_title),
                 subtitle = stringResource(R.string.theme_system_default_desc),
@@ -461,8 +519,13 @@ fun ThemesCarousel(
                 icon = Icons.Rounded.PhoneAndroid,
                 onClick = onNavigateToThemes
             )
-        } else {
-            val theme = displayThemes[i - 1]
+        }
+
+        // 2. Installed Themes
+        itemsIndexed(
+            items = displayThemes,
+            key = { _, theme -> "theme_${theme.id}" }
+        ) { _, theme ->
             val color = try {
                 Color((theme.global.highlightColor ?: "#00C7FF").toColorInt())
             } catch (_: Exception) { LocalHyperCapsuleColors.current.primary }
@@ -477,6 +540,19 @@ fun ThemesCarousel(
                 icon = Icons.Rounded.Palette,
                 customIcon = customIcon,
                 onClick = { onEditTheme(theme.id) }
+            )
+        }
+
+        // 3. Browse More Card
+        item(key = "theme_browse_more") {
+            ThemePreviewCard(
+                title = stringResource(R.string.design_browse_more),
+                subtitle = "",
+                color = LocalHyperCapsuleColors.current.primary,
+                isActive = false,
+                icon = Icons.Rounded.Add,
+                isAction = true,
+                onClick = onNavigateToThemes
             )
         }
     }
@@ -500,7 +576,9 @@ fun ThemePreviewCard(
     val typography = LocalHyperCapsuleTypography.current
 
     HyperCapsuleGlassCard(
-        modifier = modifier.height(180.dp),
+        modifier = modifier
+            .width(160.dp)
+            .height(180.dp),
         shape = shapes.large,
         borderColor = if (isActive) colors.primary else colors.borderHighlight,
         backgroundColor = if (isActive) colors.primary.copy(alpha = 0.08f) else colors.surfaceElevatedGlass,
@@ -581,6 +659,7 @@ fun ThemePreviewCard(
                             Text(
                                 text = "Active",
                                 style = typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
                         }
@@ -609,9 +688,11 @@ fun ThemePreviewCard(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Stable, high-performance Widgets Row with zero clipping artifacts.
+ */
 @Composable
-fun WidgetsCarousel(
+fun StableWidgetsRow(
     savedCount: Int,
     icons: List<Drawable>,
     onNavigateToWidgets: () -> Unit,
@@ -628,7 +709,7 @@ fun WidgetsCarousel(
                 onClick = onAddWidget,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
+                    .height(145.dp)
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -637,7 +718,7 @@ fun WidgetsCarousel(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(52.dp)
+                            .size(48.dp)
                             .clip(shapes.medium)
                             .background(colors.primary.copy(alpha = 0.12f)),
                         contentAlignment = Alignment.Center
@@ -645,7 +726,7 @@ fun WidgetsCarousel(
                         Icon(
                             imageVector = Icons.Rounded.Widgets,
                             contentDescription = null,
-                            modifier = Modifier.size(28.dp),
+                            modifier = Modifier.size(24.dp),
                             tint = colors.primary
                         )
                     }
@@ -660,26 +741,24 @@ fun WidgetsCarousel(
             }
         }
     } else {
-        val displayCount = icons.size
-        val totalCount = displayCount + 1
-        val state = rememberCarouselState { totalCount }
+        val listState = rememberLazyListState()
 
-        HorizontalMultiBrowseCarousel(
-            modifier = Modifier.fillMaxWidth(),
-            state = state,
-            preferredItemWidth = 140.dp,
-            itemSpacing = 12.dp,
-            contentPadding = PaddingValues(horizontal = 16.dp)
-        ) { i ->
-            if (i < displayCount) {
-                val icon = icons[i]
+        LazyRow(
+            state = listState,
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            itemsIndexed(icons, key = { index, _ -> "widget_$index" }) { index, icon ->
                 WidgetPreviewCard(
-                    label = stringResource(R.string.widget_id_fmt, i + 1),
+                    label = stringResource(R.string.widget_id_fmt, index + 1),
                     icon = icon,
                     isAction = false,
                     onClick = onNavigateToWidgets
                 )
-            } else {
+            }
+
+            item(key = "widget_add_new") {
                 WidgetPreviewCard(
                     label = stringResource(R.string.design_add_new),
                     icon = null,
@@ -705,7 +784,9 @@ fun WidgetPreviewCard(
     val typography = LocalHyperCapsuleTypography.current
 
     HyperCapsuleGlassCard(
-        modifier = modifier.height(160.dp),
+        modifier = modifier
+            .width(140.dp)
+            .height(160.dp),
         shape = shapes.large,
         onClick = onClick
     ) {

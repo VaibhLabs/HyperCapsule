@@ -4,6 +4,34 @@ All notable changes to the HyperCapsule codebase are documented in this file.
 
 ---
 
+## [1.00 Stable] - 2026-11-11
+### Designed & Developed by VaibhLabs
+
+### Added & Refined
+- **Human-Crafted Visual Identity & UI Polish:**
+  - Shifted from generic AI neon gradients to disciplined spatial elevation, intentional typography hierarchy, and subtle specular borders.
+  - Native AMOLED deep black base (`#06080C`) paired with Xiaomi HyperOS glass accents.
+- **Island Behavior Complete Redesign:**
+  - Redesigned `IslandSettingsControl` with 3 logical modules: Display & Auto-Dismissal, Floating Popup (Heads-Up) Presentation, and Notification Interception & Inline Reply.
+  - Added live interactive Island simulator demonstrating real-time pill expansion and auto-close countdown.
+- **Glitch-Free Design Tab Architecture:**
+  - Solved root cause of the side black bar artifact and swipe instability by replacing experimental Material 3 carousels with bounded, edge-to-edge aware `HorizontalPager` and `LazyRow` components.
+  - Fluid 120Hz smooth scrolling and precise page snapping across all screen aspect ratios.
+- **Tactile Motion Physics:**
+  - Spring toggle switches with spring damping (`Spring.DampingRatioMediumBouncy`) and smooth thumb offset/morphing.
+  - Animated expand/collapse for dependent settings with `AnimatedVisibility`.
+  - Micro-haptic feedback on toggle and button clicks.
+- **Theme Studio Live Island Mockups:**
+  - Real notification island previews for installed themes and system default styles.
+- **Developer Branding & Navigation Cleanup:**
+  - Officially branded as **Developed by VaibhLabs**.
+  - Added direct link button **Visit VaibhLabs.com** pointing to `https://github.com/VaibhLabs/HyperCapsule`.
+  - Removed outdated Version History and Special Thanks entries from the user-facing Settings interface while preserving required legal notices.
+- **One-Time v1.00 Stable Welcome Announcement:**
+  - Replaced legacy startup changelog with a one-time release dialog highlighting verified capabilities.
+
+---
+
 ## [Phase 1: Project Rebranding & Engineering Refactor] - 2026-11-11
 
 ### Added
