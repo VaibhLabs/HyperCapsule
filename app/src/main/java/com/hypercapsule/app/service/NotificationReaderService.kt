@@ -9,6 +9,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.session.MediaController
+import android.media.session.MediaSession
+import android.media.session.PlaybackState
 import android.os.Bundle
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -543,12 +546,23 @@ class NotificationReaderService : NotificationListenerService() {
                 }
             }
         } else if (type == NotificationType.MESSAGE || type == NotificationType.STANDARD) {
-            // HyperOS island-swipe only hides the island; the focus notification stays posted and no
-            // removal callback fires, so an untimed island blocks the permanent island forever.
+            val isAudioPlaying = nativeIslands.isNotEmpty() || activeIslands.values.any { it.type == NotificationType.MEDIA }
+            val autoDismissDelayMs = if (isAudioPlaying) {
+                // When audio/music is playing, Xiaomi's status bar island slot is occupied by the media player,
+                // which prevents HyperOS from auto-collapsing floating notifications into a small island pill.
+                // Auto-dismiss the bridge notification after the float duration (default 5s) so it never gets
+                // stuck permanently expanded (big) on screen.
+                val ftSeconds = config.floatTimeout ?: 5
+                (ftSeconds * 1000L).coerceIn(3000L, 10000L)
+            } else {
+                val timeoutSeconds = config.timeout ?: 10
+                if (timeoutSeconds > 0) (timeoutSeconds * 1000L).coerceIn(5000L, 30000L) else STANDARD_ISLAND_TIMEOUT_MS
+            }
+
             timeoutJobs[originalKey]?.cancel()
             timeoutJobs[originalKey] = serviceScope.launch {
-                delay(STANDARD_ISLAND_TIMEOUT_MS)
-                Log.d(TAG, "Island TTL reached for $originalKey, removing translated notification $bridgeId")
+                delay(autoDismissDelayMs)
+                Log.d(TAG, "Island timeout reached for $originalKey ($autoDismissDelayMs ms), removing translated notification $bridgeId")
                 NotificationManagerCompat.from(this@NotificationReaderService).cancel(bridgeId)
                 cleanupCache(originalKey)
                 timeoutJobs.remove(originalKey)
@@ -597,6 +611,65 @@ class NotificationReaderService : NotificationListenerService() {
     //  STANDARD NOTIFICATION LOGIC
     // =========================================================================
 
+    private fun isMediaPlaying(sbn: StatusBarNotification): Boolean {
+        try {
+            val extras = sbn.notification.extras ?: return false
+
+            // 1. Check MediaSession.Token via MediaController
+            val token = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                extras.getParcelable(Notification.EXTRA_MEDIA_SESSION, MediaSession.Token::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                extras.getParcelable(Notification.EXTRA_MEDIA_SESSION) as? MediaSession.Token
+            }
+
+            if (token != null) {
+                try {
+                    val controller = MediaController(this, token)
+                    val state = controller.playbackState?.state
+                    if (state != null) {
+                        return state == PlaybackState.STATE_PLAYING ||
+                               state == PlaybackState.STATE_FAST_FORWARDING ||
+                               state == PlaybackState.STATE_REWINDING ||
+                               state == PlaybackState.STATE_BUFFERING ||
+                               state == PlaybackState.STATE_CONNECTING
+                    }
+                } catch (e: Exception) {
+                    Log.d(TAG, "Could not check MediaController state: ${e.message}")
+                }
+            }
+
+            // 2. Fallback: Inspect notification action titles (Pause button means playing; Play button means paused)
+            val actions = sbn.notification.actions
+            if (actions != null && actions.isNotEmpty()) {
+                val hasPauseAction = actions.any { action ->
+                    val title = action.title?.toString()?.lowercase() ?: ""
+                    title.contains("pause") || title.contains("pausar") || title.contains("pausa") ||
+                    title.contains("unterbrechen") || title.contains("stop") || title.contains("suspendre")
+                }
+                val hasPlayAction = actions.any { action ->
+                    val title = action.title?.toString()?.lowercase() ?: ""
+                    title.contains("play") || title.contains("reproducir") || title.contains("abspielen") ||
+                    title.contains("reprendre") || title.contains("lecture")
+                }
+                if (hasPauseAction && !hasPlayAction) return true
+                if (hasPlayAction && !hasPauseAction) return false
+            }
+
+            // 3. Fallback: Ongoing status
+            return sbn.isOngoing
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking media playing state", e)
+            return sbn.isOngoing
+        }
+    }
+
+    private fun isAppBridgingMedia(packageName: String): Boolean {
+        if (!isAppAllowed(packageName)) return false
+        val types = getEffectiveTypes(packageName)
+        return types.contains(NotificationType.MEDIA.name)
+    }
+
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     private fun isNativeIslandNotification(sbn: StatusBarNotification): Boolean {
         if (sbn.packageName == packageName) return false
@@ -605,18 +678,22 @@ class NotificationReaderService : NotificationListenerService() {
             return true
         }
         val template = extras.getString(Notification.EXTRA_TEMPLATE)
-        if (template == "androidx.media.app.NotificationCompat\$MediaStyle" ||
+        val isMedia = template == "androidx.media.app.NotificationCompat\$MediaStyle" ||
             template == "android.app.Notification\$MediaStyle" ||
-            template == "android.app.Notification\$DecoratedMediaCustomViewStyle") {
-            return true
+            template == "android.app.Notification\$DecoratedMediaCustomViewStyle" ||
+            extras.containsKey(Notification.EXTRA_MEDIA_SESSION) ||
+            sbn.notification.category == Notification.CATEGORY_TRANSPORT
+
+        if (isMedia) {
+            // If the user enabled this app for Music/Media in HyperCapsule, HyperCapsule owns it
+            // and will translate it into a Music Island (do NOT treat it as an external native island).
+            if (isAppBridgingMedia(sbn.packageName)) {
+                return false
+            }
+            return isMediaPlaying(sbn)
         }
-        if (extras.containsKey(Notification.EXTRA_MEDIA_SESSION)) {
-            return true
-        }
+
         val category = sbn.notification.category
-        if (category == Notification.CATEGORY_TRANSPORT) {
-            return true
-        }
         if (category == Notification.CATEGORY_NAVIGATION && sbn.isOngoing) {
             return true
         }
@@ -628,6 +705,7 @@ class NotificationReaderService : NotificationListenerService() {
             if (it.packageName != packageName) {
                 if (isNativeIslandNotification(it)) {
                     if (nativeIslands.add(it.key)) updatePermanentIsland()
+                    return
                 } else {
                     if (nativeIslands.remove(it.key)) updatePermanentIsland()
                 }
@@ -714,6 +792,19 @@ class NotificationReaderService : NotificationListenerService() {
             if (rawSbn.key != effectiveKey) {
                 removalJobs[rawSbn.key]?.cancel()
                 removalJobs.remove(rawSbn.key)
+            }
+
+            // [MEDIA CHECK] If media is paused or stopped, do not keep or post an island
+            if (type == NotificationType.MEDIA && !isMediaPlaying(sbn)) {
+                Log.d(TAG, "Media is paused or stopped for ${sbn.packageName}. Clearing active island.")
+                val existingBridgeId = activeTranslations[effectiveKey]
+                if (existingBridgeId != null) {
+                    try {
+                        NotificationManagerCompat.from(this@NotificationReaderService).cancel(existingBridgeId)
+                    } catch (_: Exception) {}
+                }
+                cleanupCache(effectiveKey)
+                return
             }
             var isUpdate = activeIslands.containsKey(effectiveKey)
             var bridgeId = sbn.key.hashCode()
@@ -1067,12 +1158,22 @@ class NotificationReaderService : NotificationListenerService() {
         val targetChannel = if (isShowShade == false) SILENT_NOTIFICATION_CHANNEL_ID else NOTIFICATION_CHANNEL_ID
         val targetPriority = if (isShowShade == false) NotificationCompat.PRIORITY_MIN else NotificationCompat.PRIORITY_HIGH
 
+        val detectedType = detectNotificationType(sbn)
+        val shouldBeOngoing = when (detectedType) {
+            NotificationType.CALL,
+            NotificationType.TIMER,
+            NotificationType.PROGRESS,
+            NotificationType.DOWNLOAD -> true
+            NotificationType.MEDIA -> isMediaPlaying(sbn)
+            else -> sbn.isOngoing
+        }
+
         val builder = NotificationCompat.Builder(this, targetChannel)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.notification_went_wrong))
             .setPriority(targetPriority)
-            .setOngoing(true)
+            .setOngoing(shouldBeOngoing)
             .setOnlyAlertOnce(shouldAlertOnce)
 
         if (isShowShade == false) {
@@ -1359,6 +1460,13 @@ class NotificationReaderService : NotificationListenerService() {
                         }
 
                         if (finalConfig.dismissWithOriginal == true || forceDismiss) {
+                            keysToRemove.add(originalKey)
+                        }
+                    } else if (activeIsland.type == NotificationType.MEDIA) {
+                        // Original media notification is still in shade, but check if playback has paused or stopped
+                        val originalSbn = currentNotifications.find { it.key == originalKey }
+                        if (originalSbn != null && !isMediaPlaying(originalSbn)) {
+                            Log.d(TAG, "Sync: Media notification is paused/stopped for $originalKey, clearing active island.")
                             keysToRemove.add(originalKey)
                         }
                     }

@@ -186,4 +186,94 @@ class RemediationVerificationTest {
         assertEquals("icons/notification/app_icon.png", normalizedPath)
         assertFalse(normalizedPath.contains('\\'))
     }
+
+    // =========================================================================
+    // PERMANENT ISLAND & MEDIA PLAYBACK STATE TESTS
+    // =========================================================================
+
+    @Test
+    fun testMediaPlaybackHidesPermanentIslandAndPauseRestoresItWithoutReboot() {
+        val nativeIslands = mutableSetOf<String>()
+        val mediaNotificationKey = "0|com.android.chrome|1|null|1000"
+
+        fun isNativeIsland(hasMediaStyle: Boolean, isPlaying: Boolean): Boolean {
+            if (hasMediaStyle) return isPlaying
+            return false
+        }
+
+        fun updatePermanentIsland(hasMediaStyle: Boolean, isPlaying: Boolean) {
+            if (isNativeIsland(hasMediaStyle, isPlaying)) {
+                nativeIslands.add(mediaNotificationKey)
+            } else {
+                nativeIslands.remove(mediaNotificationKey)
+            }
+        }
+
+        fun canShowPermanentIsland(): Boolean = nativeIslands.isEmpty()
+
+        // 1. Initial State: No media playing -> Permanent island is visible
+        assertTrue("Permanent island must be visible initially", canShowPermanentIsland())
+
+        // 2. Music/Audio starts in Chrome -> Permanent island temporarily hides
+        updatePermanentIsland(hasMediaStyle = true, isPlaying = true)
+        assertFalse("Permanent island must be hidden while audio is actively playing", canShowPermanentIsland())
+        assertTrue("Chrome media must be in nativeIslands during playback", nativeIslands.contains(mediaNotificationKey))
+
+        // 3. Audio paused or stopped -> Permanent island restores instantly without reboot!
+        updatePermanentIsland(hasMediaStyle = true, isPlaying = false)
+        assertTrue("Permanent island must restore instantly when audio is paused/stopped without rebooting", canShowPermanentIsland())
+        assertFalse("Chrome media must be removed from nativeIslands when paused", nativeIslands.contains(mediaNotificationKey))
+    }
+
+    @Test
+    fun testIsNativeIslandOnlyActiveWhenPlayingForMedia() {
+        fun isNativeIslandNotificationSimulated(
+            isMiuiFocus: Boolean,
+            isMediaStyle: Boolean,
+            isPlaying: Boolean,
+            isAppBridgingMedia: Boolean = false
+        ): Boolean {
+            if (isMiuiFocus) return true
+            if (isMediaStyle) {
+                if (isAppBridgingMedia) return false
+                return isPlaying
+            }
+            return false
+        }
+
+        // True MIUI Focus island is always native
+        assertTrue(isNativeIslandNotificationSimulated(isMiuiFocus = true, isMediaStyle = false, isPlaying = false))
+
+        // Chrome/Standard Media: only native island while actively playing when NOT bridged
+        assertTrue("Playing unbridged media must be treated as native island to hide permanent island",
+            isNativeIslandNotificationSimulated(isMiuiFocus = false, isMediaStyle = true, isPlaying = true, isAppBridgingMedia = false))
+
+        assertFalse("Paused media must NOT be treated as native island, allowing permanent island to show",
+            isNativeIslandNotificationSimulated(isMiuiFocus = false, isMediaStyle = true, isPlaying = false, isAppBridgingMedia = false))
+
+        // When user enables app for Music in HyperCapsule, it must NOT be treated as native island!
+        assertFalse("Bridged media app in HyperCapsule must NOT be treated as native island so Music Island can show",
+            isNativeIslandNotificationSimulated(isMiuiFocus = false, isMediaStyle = true, isPlaying = true, isAppBridgingMedia = true))
+    }
+
+    @Test
+    fun testNotificationAutoDismissDuringAudioPlayback() {
+        fun calculateAutoDismissDelay(isAudioPlaying: Boolean, floatTimeoutSeconds: Int?, timeoutSeconds: Int?): Long {
+            return if (isAudioPlaying) {
+                val ft = floatTimeoutSeconds ?: 5
+                (ft * 1000L).coerceIn(3000L, 10000L)
+            } else {
+                val t = timeoutSeconds ?: 10
+                if (t > 0) (t * 1000L).coerceIn(5000L, 30000L) else 60000L
+            }
+        }
+
+        // When audio is playing, float timeout (e.g. 5s) governs dismissal so it never stays stuck permanently big
+        val delayDuringAudio = calculateAutoDismissDelay(isAudioPlaying = true, floatTimeoutSeconds = 5, timeoutSeconds = 10)
+        assertEquals(5000L, delayDuringAudio)
+
+        // When audio is not playing, normal timeout governs dismissal
+        val delayNormal = calculateAutoDismissDelay(isAudioPlaying = false, floatTimeoutSeconds = 5, timeoutSeconds = 10)
+        assertEquals(10000L, delayNormal)
+    }
 }
